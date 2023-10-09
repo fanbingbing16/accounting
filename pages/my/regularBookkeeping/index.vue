@@ -26,7 +26,7 @@
 	}
 	const changePage = ()=>{
 		uni.navigateTo({
-			url:'/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa?type='+'收入'
+			url:'/pages/incomeExpenditure/addScheduleTask'
 		})
 	}
 </script>

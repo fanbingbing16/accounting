@@ -2,6 +2,9 @@ export const transform = (date : Date) => {
 	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} 
 	${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 }
+export const transformNoTime= (date : Date) => {
+	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+}
 export const transformMonthDate = (date : Date) => {
 	return `${date.getMonth() + 1}-${date.getDate()}`
 }

@@ -77,6 +77,13 @@
 				"navigationStyle": "custom"
 			}
 
+		},
+		{
+			"path": "pages/incomeExpenditure/addScheduleTask",
+			"style": {
+				"navigationStyle": "custom"
+			}
+
 		}
 	],
 	"globalStyle": {

@@ -14,6 +14,7 @@ module.exports = {
             }
             //开始数据操作
             connection.query(sql, params, function(err, results, fields) {
+                console.log(results,fields,'111 result fields',sql)
                 if (err) {
                   console.log(res,'errxxxxxxxxxxxx',err)
                   res?.status(404).send(err);
@@ -23,7 +24,7 @@ module.exports = {
                 callback &&
                     callback(
                         JSON.parse(JSON.stringify(results)),
-                        JSON.parse(JSON.stringify(fields))
+                        JSON.parse(JSON.stringify(fields||{}))
                     )
                     //停止链接数据库，必须在查询语句后，要不然一调用这个方法，就直接停止链接，数据操作就会失败
                 }

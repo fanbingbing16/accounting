@@ -15,7 +15,7 @@ module.exports = {
         }
         connection.query('select * from category where id = ? and userid=? and delete_time is NULL', [data.typeid, data.userid], function (err, results, fields) {
           if (err || results.length === 0) {
-            console.log('errxxxxxxxxxxxx', err)
+            console.log('errxxxxxxxxxxxx', err,)
             res?.status(404).send({ status: 0, msg: err || '类别不存在', data: null });
             return
           } else if (results.length > 0) {
