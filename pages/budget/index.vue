@@ -24,7 +24,8 @@
 		<view class="card">
 			<view class="title title-1">
 				<text>本{{type==='month'?'月':'周'}}总预算</text>
-				<text class="text">￥{{type==='month'?moreData.mBudget:moreData.wBudget}}</text>
+				<text
+					class="text">￥{{moreData&&(moreData.mBudget||moreData.wBudget)&&(type==='month'?moreData.mBudget:moreData.wBudget).toFixed(2)}}</text>
 			</view>
 			<view class="title title-2-1">
 				<template v-if="type==='month'">
@@ -40,7 +41,7 @@
 			</view>
 			<view class="title title-2">
 				<text>本{{type==='month'?'月':'周'}}已支出：￥{{zMoney}}</text>
-				<text class="text">剩余￥{{allMoney}}</text>
+				<text class="text">剩余￥{{allMoney.toFixed(2)}}</text>
 			</view>
 			<hr style="color:black;" class="m-t-1 m-b-1">
 			<view class="title title-3">
@@ -155,13 +156,35 @@
 			function getRange() {
 				return [YearRange.value, monthRange.value, type.value === 'work' ? dateRange.value : undefined]
 			}
-function goToPage(){
-	
-}
-			function back() {
-				uni.navigateBack({
-					delta: 1
+
+			function goToPage() {
+				uni.navigateTo({
+					url: '/pages/budget/add'
 				})
+			}
+
+			function back() {
+				const pages = getCurrentPages()
+				const hasRoute = pages.some(item => {
+					if (item.route !== 'pages/budget/index' && item.route !== 'pages/budget/add') {
+						if (item.route.indexOf('pages/tabbar') > -1) {
+							uni.switchTab({
+								url: '/' + item.route
+							})
+						} else {
+							uni.navigateTo({
+								url: '/' + item.route
+							})
+						}
+
+						return true
+					}
+				})
+				if (!hasRoute) {
+					uni.switchTab({
+						url: '/'
+					})
+				}
 			}
 
 			function changeType(str) {

@@ -70,6 +70,13 @@
 				"navigationStyle": "custom"
 			}
 
+		},
+		{
+			"path": "pages/budget/add",
+			"style": {
+				"navigationStyle": "custom"
+			}
+
 		}
 	],
 	"globalStyle": {
