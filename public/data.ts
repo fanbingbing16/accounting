@@ -2,12 +2,13 @@ import { request } from '@/public/request'
 let mExpenditure = 0//本月总支出
 let mIncome = 0//本月总收入
 let mBudget = 0//本月总预算
-let allMonthMoney = 0//本月剩余
+let allMonth = 0//本月剩余
+let allMonthMoney = 0//本月剩余 预算有关
 let categoryExpenditure = []//当前用户的支出分类
 let wExpenditure = 0//本周总支出
 let wIncome = 0//本舟总收入
 let wBudget = 0//本周总预算
-let allWMoney = 0//本周剩余
+let allWMoney = 0//本周剩余 预算有关
 let hasMonth = false//是否已经获得本月的数据
 let hasWork = false//是否已经获得本周的数据
 let data : { time : Date, data : any[] }[] = []//收入支出列表
@@ -56,6 +57,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 			mExpenditure = 0
 			hasMonth = true
 			// allMonthMoney = 0
+			allMonth = 0
 		} else {
 			wIncome = 0
 			wExpenditure = 0
@@ -70,6 +72,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 				if (type === 'month') {
 					mIncome += +item.money
 					// allMonthMoney += +item.money
+					allMonth+= +item.money
 				}
 
 				else {
@@ -81,6 +84,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 				if (type === 'month') {
 					mExpenditure += +item.money
 					// allMonthMoney -= +item.money
+					allMonth -=+item.money
 				}
 				else {
 					wExpenditure += +item.money
@@ -118,6 +122,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		wBudget,
 		data,
 		allMonthMoney,
+		allMonth,
 		allWMoney,
 		averaW: (allWMoney / 7).toFixed(2),
 		averaM: (allMonthMoney / getMonthDay(+exec[1], +exec[2])).toFixed(2),

@@ -23,14 +23,14 @@
 					</uni-forms-item>
 					<uni-forms-item label="结束日期" required name="endTime" label-width="100">
 						<uni-data-checkbox v-model="valiFormData.endTime" :localdata="[{value:'',text:'不限制'}]"
-							@click="valiFormData.endTime=''"></uni-data-checkbox>
-						<uni-datetime-picker type="date" :clear-icon="false" v-model="valiFormData.endTime" />
+							@click="valiFormData.endTime=''"	></uni-data-checkbox>
+						<uni-datetime-picker type="date" :clear-icon="false" v-model="valiFormData.endTime"  :start="new Date().setHours(24)"/>
 					</uni-forms-item>
 					<uni-forms-item label="备注" name="description">
 						<uni-easyinput v-model="valiFormData.description" placeholder="请输入备注" />
 					</uni-forms-item>
 				</uni-forms>
-				<button type="primary" @click="submit('valiForm')">提交</button>
+				<button type="primary" @click="submit('valiForm')" class="button">提交</button>
 			</view>
 		</uni-section>
 
@@ -44,7 +44,9 @@
 	import {
 		request
 	} from '@/public/request.ts'
-	import {transformNoTime} from '@/public/transform.ts'
+	import {
+		transformNoTime
+	} from '@/public/transform.ts'
 	export default {
 		setup() {
 			const categoryData = ref([])
@@ -98,7 +100,7 @@
 					url: '/pages/my/regularBookkeeping/index'
 				})
 			}
-			
+
 			request({
 				url: '/category?userid=1'
 			}).then(res => {
@@ -117,30 +119,31 @@
 				onchange,
 				valiFormData,
 				rules,
-				
+
 			}
 		},
-		methods:{
+		methods: {
 			submit(ref) {
 				this.$refs[ref].validate().then(res => {
 					console.log('success', res);
 					request({
-						url:'/expenditure/timeAdd',
-						data:{
+						url: '/expenditure/timeAdd',
+						data: {
 							...res,
-							userid:'1',
-							startTime:transformNoTime(new Date())+' 05:00:00'
+							endTime:res.endTime? res.endTime + ' 05:00:00':'',
+							userid: '1',
+							startTime: transformNoTime(new Date()) + ' 05:00:00'
 						},
-						method:'POST'
-					}).then(()=>{
+						method: 'POST'
+					}).then(() => {
 						uni.showToast({
-							title:'添加成功',
+							title: '添加成功',
 						})
-						setTimeout(()=>{
+						setTimeout(() => {
 							uni.navigateTo({
-								url:'/pages/my/regularBookkeeping/index'
+								url: '/pages/my/regularBookkeeping/index'
 							})
-						},2000)
+						}, 2000)
 					})
 				}).catch(err => {
 					console.log('err', err);
@@ -152,5 +155,8 @@
 <style lang="scss" scoped>
 	.addScheduleTask {
 		padding: 0 20px 20px;
+		.button{
+			background:$uni-color-warning;
+		}
 	}
 </style>

@@ -84,6 +84,13 @@
 				"navigationStyle": "custom"
 			}
 
+		},
+		{
+			"path": "pages/incomeExpenditure/overview",
+			"style": {
+				"navigationStyle": "custom"
+			}
+
 		}
 	],
 	"globalStyle": {

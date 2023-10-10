@@ -37,6 +37,7 @@
 			</view>
 			<hr>
 			<text class="bottom-text" @click="goToPage('/pages/budget/index')">设置预算</text>
+			<text class="bottom-text" @click="goToPage('/pages/incomeExpenditure/overview')">&nbsp;&nbsp;收支概况</text>
 		</view>
 		<view class="search">
 			<view class="flex-cen">
@@ -170,7 +171,7 @@
 			function getData(search = '') {
 				getMWData(true, selectTime.value, search).then(res => {
 					data.value = res.data
-					allMoney.value = res.allMonthMoney
+					allMoney.value = res.allMonth
 					sMoney.value = res.mIncome
 					zMoney.value = res.mExpenditure
 				})

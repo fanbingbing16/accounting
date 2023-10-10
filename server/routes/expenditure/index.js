@@ -91,7 +91,7 @@ router.post('/timeAdd', (req, res) => {
   console.log(req.body, 'body', 'resxxxx')
   const name = 'ding' + getId()
   db.query(`insert into schedule_tasks(every,${req.body.endTime ? 'end_time,' : ''} name,id,type,start_time,money,typeid,userid,update_time${req.body?.description ? ',description' : ''}) values(?,${req.body.endTime?'?,':''}?,?,?,'${startTime}',?,?,?,?${req.body?.description ? ',?' : ''})`, {every:every||'DAY',endTime:req.body.endTime,  name, id: getId(), type: type || '1', money, typeid, userid, updateTime: new Date(), description: req.body.description }, res, function (results, fields,) {
-    db3.query(`create event ${name} on schedule EVERY '1' ${every || 'DAY'} STARTS '${startTime}' ${req.body.endTime?' ENDS ?':''} DO  insert into expenditure_income(type,time,money,userid,typeid,update_time,ding${req.body?.description ? ',description' : ''}) values(${type},date(CURRENT_DATE),${money},?,?,NOW(),'是'${req.body?.description ? ',?' : ''})`, [req.body.endTime,userid, typeid, req.body.description], res, function (results, fields,) {
+    db3.query(`create event ${name} on schedule EVERY '1' ${every || 'DAY'} STARTS '${startTime}' ${req.body.endTime?' ENDS ?':''} DO  insert into expenditure_income(type,time,money,userid,typeid,update_time,ding${req.body?.description ? ',description' : ''}) values(${type},date(CURRENT_DATE),${money},?,?,NOW(),'是'${req.body?.description ? ',?' : ''})`, req.body.endTime?[req.body.endTime,userid, typeid, req.body.description]:[userid, typeid, req.body.description], res, function (results, fields,) {
 
       res.send({ status: 1, msg: '添加成功', data: null })
 
