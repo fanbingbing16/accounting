@@ -83,7 +83,7 @@
 				<uni-icons type="image" :size="40" color="#ffbcc9" />
 				<view class="item m-l-4">
 					<text>{{category.name}}</text>
-					<view class="han" :style="{background:color[(index)%9]}"></view>
+					<view class="han" :style="{background:color[(index)%9],width:chartDataPie.series&&chartDataPie.series[0].data[index].value/zMoney*100+'%'}"></view>
 					<view class="flex">
 						<text class="a1">本月共支出￥{{category.sum}}</text>
 						<text class="a1">消费{{category.count}}笔</text>
@@ -238,7 +238,7 @@
 					chartDataPie.value.series[0].data = chartDataPie.value.series[0].data.map(item => {
 						return {
 							name: item.name,
-							value: item.value / allMoney * 100
+							value: item.value 
 						}
 					})
 					console.log(chartDataLine.value, chartDataPie.value)
