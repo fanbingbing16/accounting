@@ -61,7 +61,6 @@ function getWeekDataList(data) {
 		}
 		weekList.push(date.getFullYear() + "-" + myMonth + "-" + myDate);
 	}
-	console.log(weekList);
 	return weekList
 }
 module.exports = transformSE

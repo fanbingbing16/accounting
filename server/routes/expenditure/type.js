@@ -36,10 +36,8 @@ function conn(connection, sql, data, callback, res) {
     if (data[key])
       arr.push(data[key])
   }
-  console.log(data,'data',arr)
   connection.query(sql, arr, function (err, results2, fields2) {
     if (err) {
-      console.log( 'errxxxxxxxxxxxx34', err)
       res?.status(404).send({ status: 0, msg: err, data: null })
 
     } else {

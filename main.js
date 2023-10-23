@@ -1,5 +1,8 @@
 import App from './App.vue'
-
+if (uni.getSystemInfoSync().platform !== "devtools") {
+	console.log = () => {};
+	console.info= () => {};
+}
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
