@@ -64,7 +64,7 @@
 
 		</view>
 		<uni-calendar :ref="getCalendar" class="uni-calendar--hook" :clear-date="true" @confirm="confirm" :insert="false"
-			@close="close" />
+			 />
 	</view>
 </template>
 
@@ -120,20 +120,16 @@
 			}
 
 			function open() {
-				console.log(calendarEl.value, 'cal')
+				
 				calendarEl.value.open()
 				// this.$refs.calendar.open()
 
 			}
 
-
-
-			function close() {
-				console.log('弹窗关闭');
-			}
+		
 
 			function change(e, sliceIndex) {
-				console.log(e, 'e')
+				
 				let {
 					index
 				} = e.detail
@@ -142,15 +138,15 @@
 			}
 
 			function confirm(e) {
-				console.log('confirm 返回:', e)
+				
 				selectTime.value = new Date(e.fulldate)
 			}
 
 			function getData() {
 				request({
-					url: '/category?userid=1&type=' + (this.inverted === '收入' ? 1 : 2)
+					url: `/category?userid=${uni.getStorageSync('user')?.id}&type=` + (this.inverted === '收入' ? 1 : 2)
 				}).then(res => {
-					console.log(res, 'res')
+					
 
 					listData.value = res.data
 
@@ -159,7 +155,7 @@
 
 			function butonClick(item) {
 				if (typeof item.text === 'number') {
-					console.log(money.value, typeof money.value)
+					
 					money.value = (money.value !== '0' ? ((money.value) + item.text) : String(item.text))
 					hasDian = false
 					if (String(money.value).indexOf('.') > -1 && String(money.value).length - String(money.value).indexOf('.') >
@@ -201,7 +197,7 @@
 					url: '/expenditure/add',
 					data: {
 						type: inverted.value === '支出' ? '2' : '1',
-						userid: 1,
+						userid: uni.getStorageSync('user')?.id,
 						typeid: clickItem.value.id,
 						description: remark.value,
 						time: transform(selectTime.value),
@@ -209,7 +205,7 @@
 					},
 					method: 'POST'
 				}).then(res => {
-					console.log(res, 'res')
+					
 
 					uni.showToast({
 						title: '添加成功',
@@ -236,7 +232,7 @@
 				clickItem,
 				butonClick,
 				open,
-				close,
+				
 				getCalendar,
 				confirm,
 				isTodayF,

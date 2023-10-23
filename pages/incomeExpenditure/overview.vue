@@ -57,7 +57,7 @@
 			</view>
 			<view class="m-t-2">
 				<text class="a1">本月内平均每日支出</text>
-				<text>&nbsp;&nbsp;￥{{data.average}}</text>
+				<text>&nbsp;&nbsp;￥{{data.average||0}}</text>
 
 			</view>
 			<view>
@@ -72,7 +72,7 @@
 			</view>
 			<hr>
 
-			<charts type="pie" :chartData="chartDataPie" class="m-t-2"></charts>
+			<charts type="pie" :chartData="chartDataPie" class="m-t-2" v-if="data.count>0"></charts>
 		</view>
 		<view class="box m-t-2">
 			<view class="top">
@@ -186,7 +186,7 @@
 				request({
 					url: '/expenditure/overview',
 					data: {
-						userid: '1',
+						userid:uni.getStorageSync('user')?.id,
 						startTime: `${year.value}-${month.value}-01`,
 						endTime: `${year.value}-${month.value}-${getMonthDay(year.value,month.value)}`,
 					}
@@ -355,7 +355,7 @@
 				}
 
 				.bar {
-					width: 10vw;
+					width: 0vw;
 					/* margin-right: 2vw; */
 					margin-left: 2vw;
 					height: 2vh;

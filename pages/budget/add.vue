@@ -49,7 +49,7 @@ import { transform } from "../../public/transform"
 			const listData = ref([])
 			const clickItem = ref({})
 			request({
-				url: '/category?userid=1&type=2'
+				url: `/category?userid=${uni.getStorageSync('user')?.id}&type=2`
 			}).then(res => {
 				console.log(res, 'res')
 
@@ -90,7 +90,7 @@ import { transform } from "../../public/transform"
 				request({
 					url:'/budget/add',
 					data:{
-						userid:1,
+						userid:uni.getStorageSync('user')?.id,
 						time:transform(new Date()),
 						money:budget.value,
 						typeid:clickItem.value.id

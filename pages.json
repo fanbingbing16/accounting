@@ -19,24 +19,24 @@
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/tabbar/tabbar-2/tabbar-2",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/tabbar/tabbar-2/tabbar-2",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/tabbar/tabbar-3/tabbar-3",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		},
-		{
-			"path": "pages/tabbar/tabbar-4/tabbar-4",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/tabbar/tabbar-4/tabbar-4",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 
 		{
 			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
@@ -91,6 +91,20 @@
 				"navigationStyle": "custom"
 			}
 
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
+		},
+		{
+			"path": "pages/my/editUser",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
 		}
 	],
 	"globalStyle": {
@@ -110,12 +124,12 @@
 				"selectedIconPath": "static/img/tabbar/homeactive.png",
 				"text": "明细"
 			},
-			{
-				"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
-				"iconPath": "static/img/tabbar/guanzhu.png",
-				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
-				"text": "账单"
-			},
+			// {
+			// 	"pagePath": "pages/tabbar/tabbar-2/tabbar-2",
+			// 	"iconPath": "static/img/tabbar/guanzhu.png",
+			// 	"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+			// 	"text": "账单"
+			// },
 			//#ifdef MP-WEIXIN
 			{
 				"pagePath": "pages/tabbar/tabbar-3/tabbar-3",
@@ -131,12 +145,12 @@
 				"selectedIconPath": "static/img/tabbar/addactive.png"
 			},
 			//#endif
-			{
-				"pagePath": "pages/tabbar/tabbar-4/tabbar-4",
-				"iconPath": "static/img/tabbar/news.png",
-				"selectedIconPath": "static/img/tabbar/newsactive.png",
-				"text": "存钱"
-			},
+			// {
+			// 	"pagePath": "pages/tabbar/tabbar-4/tabbar-4",
+			// 	"iconPath": "static/img/tabbar/news.png",
+			// 	"selectedIconPath": "static/img/tabbar/newsactive.png",
+			// 	"text": "存钱"
+			// },
 			{
 				"pagePath": "pages/tabbar/tabbar-5/tabbar-5",
 				"iconPath": "static/img/tabbar/me.png",

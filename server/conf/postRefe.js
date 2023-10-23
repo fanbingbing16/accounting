@@ -16,7 +16,7 @@ module.exports = {
       if (hasUser) {
         connection.query('select * from user where id = ? and  delete_time is NULL', [data.userid], function (err, results, fields) {
           if (err || results.length === 0) {
-            console.log('errxxxxxxxxxxxx', err)
+            console.log('errxxxxxxxxxxxx', err,data.userid)
             res?.status(404).send({ status: 0, msg: err || '用户不存在', data: null });
             return
           } else if (results.length > 0) {

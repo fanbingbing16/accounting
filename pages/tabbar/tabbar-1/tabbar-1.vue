@@ -63,7 +63,7 @@
 						<uni-icons type="image" size="26px"></uni-icons>
 						<text class="text">{{item2.name}}</text>
 					</view>
-
+					<text class="text">{{item2.description}}</text>
 					<text class="text">{{item2.type==='1'?'':'-'}}￥{{item2.money}}</text>
 				</view>
 			</view>
@@ -137,8 +137,8 @@
 			})
 
 
-			function goToPage(url='') {
-				console.log( url || '/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa','cccc')
+			function goToPage(url = '') {
+				console.log(url || '/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa', 'cccc')
 				uni.navigateTo({
 					url: url || '/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa'
 				})
@@ -175,43 +175,9 @@
 					sMoney.value = res.mIncome
 					zMoney.value = res.mExpenditure
 				})
-				// request({
-				// 	url: '/expenditure',
-				// 	data: {
-				// 		time: selectTime.value,
-				// 		userid: 1,
-				// 		search
-				// 	}
-				// }).then(res => {
-				// 	data.value = res.data
-				// 	allMoney.value = 0
-				// 	sMoney.value = 0
-				// 	zMoney.value = 0
-				// 	const tempDate = []
-				// 	data.value.map(item => {
-				// 		if (item.type === '1') {
-				// 			allMoney.value += +item.money
-				// 			sMoney.value += +item.money
-				// 		} else {
-				// 			allMoney.value -= +item.money
-				// 			zMoney.value += +item.money
-				// 		}
-				// 		if (new Date(item.time).getDate() !== new Date(tempDate.slice(-1)?.[0]?.time).getDate()) {
-				// 			tempDate.push({
-				// 				time: new Date(item.time),
-				// 				data: [{
-				// 					...item
-				// 				}]
-				// 			})
-				// 		} else {
-				// 			tempDate.slice(-1)[0].data.push(item)
-				// 		}
-				// 	})
-				// 	data.value = tempDate
-				// 	console.log(data.value, 'data')
-				// })
+
 			}
-			// getData()
+
 			const transformCnF = computed(() => {
 
 				return transformCn(selectTime.value ? (typeof selectTime.value === 'object' ? selectTime.value : new Date(
@@ -291,7 +257,7 @@
 				}
 
 				.bar {
-					width: 10vw;
+					width: 0vw;
 					/* margin-right: 2vw; */
 					margin-left: 2vw;
 					height: 2vh;

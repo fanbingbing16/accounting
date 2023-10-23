@@ -102,7 +102,7 @@
 			}
 
 			request({
-				url: '/category?userid=1'
+				url: `/category?userid=${uni.getStorageSync('user')?.id}`
 			}).then(res => {
 				console.log(res, 'res')
 
@@ -131,7 +131,7 @@
 						data: {
 							...res,
 							endTime:res.endTime? res.endTime + ' 05:00:00':'',
-							userid: '1',
+							userid: uni.getStorageSync('user')?.id,
 							startTime: transformNoTime(new Date()) + ' 05:00:00'
 						},
 						method: 'POST'

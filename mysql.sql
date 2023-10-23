@@ -21,13 +21,13 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `base_category`;
 CREATE TABLE `base_category` (
 `id`  bigint NOT NULL ,
-`name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
-`icon`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
-`type`  enum('2','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '2' COMMENT '1是收入 2是支出' ,
+`name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`icon`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`type`  enum('2','1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '2' COMMENT '1是收入 2是支出' ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 ;
 
@@ -43,7 +43,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `budget`;
 CREATE TABLE `budget` (
-`money`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL ,
+`money`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `typeid`  bigint NOT NULL ,
 `time`  date NULL DEFAULT NULL ,
 `update_time`  datetime NOT NULL ,
@@ -57,7 +57,7 @@ INDEX `typeid2` (`typeid`) USING BTREE ,
 INDEX `userid3` (`userid`) USING BTREE 
 )
 ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 ;
 
@@ -73,20 +73,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-`name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
+`name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `id`  bigint NOT NULL AUTO_INCREMENT ,
-`sort`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' ,
-`icon`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
+`sort`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' ,
+`icon`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `update_time`  datetime NOT NULL ,
 `delete_time`  datetime NULL DEFAULT NULL ,
 `userid`  bigint NULL DEFAULT NULL ,
-`type`  enum('2','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '1是收入 2是支出' ,
+`type`  enum('2','1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '1是收入 2是支出' ,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 INDEX `userid` (`userid`) USING BTREE 
 )
 ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=50
 
 ;
@@ -103,16 +103,16 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `expenditure_income`;
 CREATE TABLE `expenditure_income` (
-`money`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' ,
+`money`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' ,
 `id`  bigint NOT NULL AUTO_INCREMENT ,
 `userid`  bigint NOT NULL ,
 `typeid`  bigint NOT NULL ,
 `update_time`  datetime NOT NULL ,
 `delete_time`  datetime NULL DEFAULT NULL ,
-`description`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
+`description`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `time`  date NULL DEFAULT NULL ,
-`type`  enum('2','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '1' COMMENT '1是收入 2是支出' ,
-`ding`  enum('否','是') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '否' ,
+`type`  enum('2','1') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '1' COMMENT '1是收入 2是支出' ,
+`ding`  enum('否','是') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '否' ,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`typeid`) REFERENCES `category` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
 FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -120,7 +120,7 @@ INDEX `userid2` (`userid`) USING BTREE ,
 INDEX `typeid` (`typeid`) USING BTREE 
 )
 ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 AUTO_INCREMENT=16958946105101
 
 ;
@@ -141,14 +141,14 @@ CREATE TABLE `schedule_tasks` (
 `delete_time`  datetime NULL DEFAULT NULL ,
 `userid`  bigint NOT NULL ,
 `typeid`  bigint NOT NULL ,
-`money`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL ,
+`money`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `start_time`  datetime NOT NULL ,
-`type`  enum('2','1') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '1' ,
-`description`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
+`type`  enum('2','1') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' ,
+`description`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 `id`  bigint NOT NULL AUTO_INCREMENT ,
 `end_time`  datetime NULL DEFAULT NULL ,
-`name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL ,
-`every`  enum('MONTH','WEEK','DAY') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'DAY' ,
+`name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+`every`  enum('MONTH','WEEK','DAY') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'DAY' ,
 PRIMARY KEY (`id`),
 FOREIGN KEY (`typeid`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (`userid`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -156,7 +156,7 @@ INDEX `s_userid` (`userid`) USING BTREE ,
 INDEX `s_typeid` (`typeid`) USING BTREE 
 )
 ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 ;
 
@@ -172,14 +172,14 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-`username`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL ,
+`username`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `id`  bigint NOT NULL ,
 `delete_time`  datetime NULL DEFAULT NULL ,
 `update_time`  datetime NOT NULL ,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
-DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
 
 ;
 

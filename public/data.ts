@@ -21,7 +21,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 			url: '/budget',
 			data: {
 				time: date,
-				userid: 1
+				userid: uni.getStorageSync('user')?.id
 			}
 		})
 		budgetData = budget.data
@@ -44,7 +44,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 			url: '/expenditure',
 			data: {
 				time: date,
-				userid: 1,
+				userid: uni.getStorageSync('user')?.id,
 				search
 			},
 
