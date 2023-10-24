@@ -23,30 +23,19 @@
 			</view>
 
 		</view>
-		<uni-section title="滑动视图" type="line" padding>
-			<!-- 因为swiper特性的关系，请指定swiper的高度 ，swiper的高度并不会被内容撑开-->
 
-			<uni-grid :column="4" :highlight="true" @change="change">
-				<uni-grid-item v-for="(item, index) in list" :index="index" :key="index">
-					<view class="grid-item-box">
-						<uni-icons type="image" :size="30" color="#777" />
-						<text class="text">{{item.text}}</text>
-					</view>
-				</uni-grid-item>
-			</uni-grid>
-
-		</uni-section>
 		<uni-list :border="true">
-			<uni-list-chat v-for="item in avatarList" :title="item.title" :avatar="item.url" :key="item.title" note="">
+			<uni-list-chat :clickable="true" v-for="item in list" :title="item.text"
+				avatar="../../../static/img/avter.png" :key="item.text" note="" @click="change(item)">
 				<view class="chat-custom-right">
+					<uni-icons type="image" :size="40" color="#f0ad4e" />
 				</view>
 			</uni-list-chat>
 		</uni-list>
-		<uni-drawer ref="showLeft" mode="left" :width="320" @change="change($event,'showLeft')">
-			<view class="close">
-				<button @click="closeDrawer('showLeft')"><text class="word-btn-white">关闭Drawer</text></button>
-			</view>
-		</uni-drawer>
+		<uni-popup ref="popup" type="dialog">
+			<uni-popup-dialog ref="inputClose" mode="input" title="设置密码锁住,不让别人看"  placeholder="请输入密码"
+				@confirm="dialogInputConfirm" ></uni-popup-dialog>
+		</uni-popup>
 	</view>
 </template>
 
@@ -65,7 +54,8 @@
 				times: 0,
 				list,
 				avatarList,
-				user: {}
+				user: {},
+				password:''
 			}
 		},
 		onLoad() {
@@ -78,7 +68,7 @@
 				data: {
 					userid: uni.getStorageSync('user')?.id
 				}
-			}).then(res => {
+			})?.then(res => {
 				this.day = res.data.day
 				this.times = res.data.times
 			})
@@ -91,17 +81,23 @@
 			})
 		},
 		methods: {
+			dialogInputConfirm(e){
+				
+				uni.setStorageSync('password',e)
+			},
 			gotoPage() {
 				uni.navigateTo({
 					url: '/pages/my/editUser'
 				})
 			},
 			change(e) {
-				let {
-					index
-				} = e.detail
+
+				if (e.badge === '1') {
+					this.$refs.popup.open()
+					return
+				}
 				uni.navigateTo({
-					url: this.list[index].url
+					url: e.url
 				})
 			},
 			showDrawer(e) {

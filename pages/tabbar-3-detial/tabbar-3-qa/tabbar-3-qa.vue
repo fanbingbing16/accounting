@@ -102,9 +102,24 @@
 			let hasDian = false
 			const selectTime = ref(new Date())
 			const back = () => {
-				uni.navigateBack({
-					delta: 1
+				// uni.navigateBack({
+				// 	delta: 1
+				// })
+				const pages = getCurrentPages()
+				console.log(pages,'pages')
+				const hasPages = pages.some(item=>{
+					if(item.route!=='pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa'){
+						uni.switchTab({
+							url:'/'+item.route
+						})
+						return true
+					}
 				})
+				if(!hasPages){
+					uni.switchTab({
+						url:'/'
+					})
+				}
 			}
 
 			function isTodayF(date) {
@@ -145,7 +160,7 @@
 			function getData() {
 				request({
 					url: `/category?userid=${uni.getStorageSync('user')?.id}&type=` + (this.inverted === '收入' ? 1 : 2)
-				}).then(res => {
+				})?.then(res => {
 					
 
 					listData.value = res.data

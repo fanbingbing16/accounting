@@ -17,18 +17,8 @@ export const list = [{
 	type: "warning"
 },
 {
-	url: '/static/c4.png',
-	text: '账单导入',
-	badge: '2',
-	type: "error"
-},
-{
 	url: '/static/c5.png',
 	text: '购物清单'
-},
-{
-	url: '/static/c6.png',
-	text: '记账提醒'
 },
 {
 	url: '/pages/budget/index',

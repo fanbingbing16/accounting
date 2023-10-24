@@ -1,4 +1,5 @@
 import App from './App.vue'
+
 if (uni.getSystemInfoSync().platform !== "devtools") {
 	console.log = () => {};
 	console.info= () => {};

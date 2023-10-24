@@ -66,7 +66,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		}
 
 		const tempDate : { time : Date, data : any[] }[] = [];
-		(res as any).data.map(item => {
+		(res as any)?.data.map(item => {
 			if (item.type === '1') {
 
 				if (type === 'month') {

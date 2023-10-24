@@ -190,7 +190,7 @@
 						startTime: `${year.value}-${month.value}-01`,
 						endTime: `${year.value}-${month.value}-${getMonthDay(year.value,month.value)}`,
 					}
-				}).then(res => {
+				})?.then(res => {
 					chartDataLine.value = {
 						categories: [],
 						series: [{
