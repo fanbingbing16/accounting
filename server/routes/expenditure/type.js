@@ -50,7 +50,9 @@ function conn(connection, sql, data, callback, res) {
       //停止链接数据库，必须在查询语句后，要不然一调用这个方法，就直接停止链接，数据操作就会失败
     }
 
-    connection.end(function (err) {
+    
+  })
+  connection.end(function (err) {
       if (err) {
         console.log('关闭数据库连接失败！')
         res?.status(404).send({ status: 0, msg: '关闭数据库连接失败！', data: null })
@@ -59,5 +61,4 @@ function conn(connection, sql, data, callback, res) {
 
       }
     })
-  })
 }

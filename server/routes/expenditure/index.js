@@ -40,6 +40,9 @@ router.get('/', (req, res) => {
     sql += ` and time BETWEEN '${date.start}' and '${date.end}' `
 
   }
+  if(query.startTime&&query.endTime){
+    sql += ` and time BETWEEN '${query.startTime}' and '${query.endTime}' `
+  }
   if (query.type) {
     sql += ' and type=?'
     data.type = query.type

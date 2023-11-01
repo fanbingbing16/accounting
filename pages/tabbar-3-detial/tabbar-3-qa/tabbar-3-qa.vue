@@ -207,6 +207,12 @@
 						icon: 'none'
 					})
 				}
+				if(remark.value?.length>10){
+					return uni.showToast({
+						title: '备注只能填写小于10的字符',
+						icon: 'none'
+					})
+				}
 
 				request({
 					url: '/expenditure/add',

@@ -105,6 +105,13 @@
 				"navigationStyle": "custom"
 			}
 		
+		},
+		{
+			"path": "pages/my/export",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
 		}
 	],
 	"globalStyle": {

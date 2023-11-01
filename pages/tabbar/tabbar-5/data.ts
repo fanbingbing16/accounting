@@ -11,15 +11,15 @@ export const list = [{
 	type: "success"
 },
 {
-	url: '/static/c3.png',
+	url: '/pages/my/export',
 	text: '账单导出',
 	badge: '99',
 	type: "warning"
 },
-{
-	url: '/static/c5.png',
-	text: '购物清单'
-},
+// {
+// 	url: '/static/c5.png',
+// 	text: '购物清单'
+// },
 {
 	url: '/pages/budget/index',
 	text: '预算设置'
