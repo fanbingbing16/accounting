@@ -6,4 +6,4 @@
 
 [MIT](https://opensource.org/licenses/MIT)
 
-Copyright (c) 2023-present, Yanling (Evan) Zhang
+Copyright (c) 2023-present, Zhang Yanling
