@@ -9,7 +9,7 @@ module.exports = {
             if (err) {
                 console.log(res, 'err', err)
 
-                res?.status(500).send('服务器错误');
+                res.status(500).send('服务器错误');
 
             }
             //开始数据操作
@@ -17,7 +17,7 @@ module.exports = {
                 console.log(results, fields, '111 result fields', sql)
                 if (err) {
                     console.log(res, 'errxxxxxxxxxxxx', err)
-                    res?.status(404).send(err);
+                    res.status(404).send(err);
 
                 } else {
                     //将查询出来的数据返回给回调函数

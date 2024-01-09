@@ -60,7 +60,7 @@ router.post('/edit', (req, res) => {
   db2.query(`update user set username=?${req.body.avter?',avter=?':''} where id=?`, { username: req.body.username, avter: req.body.avter, userid: req.body.userid }, res, function (results) {
     res.json({
       status: 1,
-      message: '111',
+      message: '修改成功',
       results: [{ id:req.body.userid, username: req.body.username,avter:req.body.avter }]
     })
   }, true)
