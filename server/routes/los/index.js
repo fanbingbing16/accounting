@@ -64,20 +64,20 @@ router.post('/delete', (req, res) => {
 })
 router.post('/addEdit', (req, res) => {
   // const data = req.body
-  let { name, content, type1, type2, id, password } = req.body;
-  if (!name || !content || !type1 || !type2) {
+  let { name, content, type1, type2, id, password,isMarkdown } = req.body;
+  if (!name || !content || !type1 || !type2||!isMarkdown) {
     res.send({ status: 0, msg: '请把所有字段填写完整', data: null })
     return
   }
   db.query('select * from user where id=111111111111 and password=' + password, [], res, function (result, fields) {
     if (result.length === 1) {
       if (!id) {
-        db.query('insert into logs(name,id,content,update_time,type1,type2) values(?,?,?,?,?,?)', [name, getId(), content, new Date(), type1, type2], res, function (result, fields) {
+        db.query('insert into logs(name,id,content,update_time,type1,type2,isMarkdown) values(?,?,?,?,?,?,?)', [name, getId(), content, new Date(), type1, type2], res, function (result, fields) {
           res.send({ status: 1, msg: '新增成功', data: null })
 
         })
       } else {
-        db.query('update logs set name=?,content=?,update_time=?,type1=?,type2=? where id=?', [name, content, new Date(), type1, type2, id], res, function (result, fields) {
+        db.query('update logs set name=?,content=?,update_time=?,type1=?,type2=?,isMarkdown=? where id=?', [name, content, new Date(), type1, type2, id], res, function (result, fields) {
           res.send({ status: 1, msg: '编辑成功', data: null })
 
         })
