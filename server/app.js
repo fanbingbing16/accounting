@@ -10,7 +10,7 @@ var loginRouter = require('./routes/login');
 var expenditureRouter = require('./routes/expenditure');
 let categoryRouter = require('./routes/category/index')
 let budgetRouter = require('./routes/budget/index')
-
+let logsRouter = require('./routes/los')
 var bodyParser = require('body-parser')
 const cors = require('cors')
 
@@ -38,7 +38,7 @@ app.use('/expenditure', expenditureRouter);
 app.use('/category', categoryRouter);
 app.use('/budget', budgetRouter);
 
-
+app.use('/logs',logsRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
