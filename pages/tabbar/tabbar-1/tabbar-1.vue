@@ -27,12 +27,12 @@
 			</view>
 			<view class="flex box-item">
 				<text class="text">支出</text>
-				<view class="bar" :style="'width:'+((zMoney/(zMoney+sMoney)*70)||0)+'vw;'"></view>
+				<view class="bar" :style="'width:'+((zMoney/(zMoney+sMoney)*70)||0).toFixed(2)+'vw;'"></view>
 				<view class="text">-￥{{zMoney}}</view>
 			</view>
 			<view class="flex box-item">
 				<text class="text">收入</text>
-				<view class="bar" :style="'width:'+((zMoney/(zMoney+sMoney)*70)||0)+'vw;'"></view>
+				<view class="bar" :style="'width:'+((sMoney/(zMoney+sMoney)*70)||0).toFixed(2)+'vw;'"></view>
 				<view class="text">￥{{sMoney}}</view>
 			</view>
 			<hr>
