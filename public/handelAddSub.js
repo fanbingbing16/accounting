@@ -56,5 +56,5 @@ export function accChu(arg1, arg2) {
 	m = Math.pow(10, Math.max(r1, r2))
 
 	n = Math.max(r1, r2)
-	return ((arg1 * m / arg2 * m) / m).toFixed(n >= 1 ? n - 1 : 0)
+	return (((arg1 * m) / (arg2 * m)) / m).toFixed(2)
 }
