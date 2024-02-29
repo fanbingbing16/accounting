@@ -1,4 +1,5 @@
 import { request } from '@/public/request'
+import { accAdd } from './handelAddSub'
 let mExpenditure = 0//本月总支出
 let mIncome = 0//本月总收入
 let mBudget = 0//本月总预算
@@ -76,13 +77,15 @@ export const getMWData = async (change : boolean = false, date : string, search 
 				}
 
 				else {
-					wIncome += +item.money
+					wIncome = accAdd(wIncome,+item.money)
+					
 					// allWMoney += +item.money
 				}
 			} else {
 
 				if (type === 'month') {
-					mExpenditure += +item.money
+					mExpenditure = accAdd(mExpenditure,+item.money)
+
 					// allMonthMoney -= +item.money
 					allMonth -=+item.money
 				}

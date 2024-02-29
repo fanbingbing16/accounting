@@ -27,12 +27,12 @@
 			</view>
 			<view class="flex box-item">
 				<text class="text">支出</text>
-				<view class="bar" :style="'width:'+((zMoney/(zMoney+sMoney)*70)||0).toFixed(2)+'vw;'"></view>
+				<view class="bar" :style="'width:'+((zMoney/accAdd(zMoney,sMoney)*70)||0).toFixed(2)+'vw;'"></view>
 				<view class="text">-￥{{zMoney}}</view>
 			</view>
 			<view class="flex box-item">
 				<text class="text">收入</text>
-				<view class="bar" :style="'width:'+((sMoney/(zMoney+sMoney)*70)||0).toFixed(2)+'vw;'"></view>
+				<view class="bar" :style="'width:'+((sMoney/accAdd(zMoney,sMoney)*70)||0).toFixed(2)+'vw;'"></view>
 				<view class="text">￥{{sMoney}}</view>
 			</view>
 			<hr>
@@ -92,6 +92,7 @@
 		request
 	} from '@/public/request.ts'
 	import dataVue from '@/pages/comm/data'
+	import {accAdd,accSub,accChu} from '@/public/handelAddSub.js'
 	export default {
 		components: {
 			dataVue
@@ -184,6 +185,9 @@
 					selectTime.value)) : new Date())
 			})
 			return {
+				accAdd,
+				accSub,
+				accChu,
 				transformCnF,
 				selectTime,
 				search,
