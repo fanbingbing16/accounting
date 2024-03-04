@@ -33,9 +33,11 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		}
 		budgetData.map(item => {
 			if (type === 'month') {
-				mBudget += +item.money
+				// mBudget += +item.money
+				mBudget = accAdd(mBudget,+item.money)
 			} else {
-				wBudget += +item.money
+				// wBudget += +item.money
+				wBudget = accAdd(wBudget,+item.money)
 			}
 		})
 
@@ -73,10 +75,10 @@ export const getMWData = async (change : boolean = false, date : string, search 
 
 				if (type === 'month') {
 					
-					mIncome = accAdd(mIncome,item.money)
+					mIncome = accAdd(mIncome,+item.money)
 					// allMonthMoney += +item.money
 					
-					allMonth = accAdd(allMonth,item.money)
+					allMonth = accAdd(allMonth,+item.money)
 				}
 
 				else {
@@ -91,11 +93,11 @@ export const getMWData = async (change : boolean = false, date : string, search 
 
 					// allMonthMoney -= +item.money
 					 
-					allMonth = accSub(allMonth,item.money)
+					allMonth = accSub(allMonth,+item.money)
 				}
 				else {
 			
-					wExpenditure = accAdd(wExpenditure,item.money)
+					wExpenditure = accAdd(wExpenditure,+item.money)
 					// allWMoney -= +item.money
 				}
 			}
