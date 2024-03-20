@@ -40,35 +40,36 @@
 				<view class="text">￥{{sMoney}}</view>
 			</view>
 		</view>
+		<button class="m-t-2" style="background-color: rgb(234, 149, 24);color: white;" @click="type=type===1?2:1;getData()">切换收入/支出</button>
 		<view class="box m-t-2">
 			<view class="top">
-				<text class="text">支出趋势概况</text>
+				<text class="text">{{type===1?'收入':'支出'}}趋势概况</text>
 			</view>
 			<hr>
 			<view class="m-t-1">
-				<text>本月内单日最高支出</text>
+				<text>本月内单日最高{{type===1?'收入':'支出'}}</text>
 			</view>
 			<view>
 				<text>在
 					<text class="red">{{data.max&&data.max.time}}</text>
-					这一天，你支出了
+					这一天，你{{type===1?'收入':'支出'}}了
 					<text class="red">￥{{data.max&&data.max.money}}</text>
 				</text>
 			</view>
 			<view class="m-t-2">
-				<text class="a1">本月内平均每日支出</text>
+				<text class="a1">本月内平均每日{{type===1?'收入':'支出'}}</text>
 				<text>&nbsp;&nbsp;￥{{data.average||0}}</text>
 
 			</view>
 			<view>
-				<text class="a1">本月内累计支出笔数</text>
+				<text class="a1">本月内累计{{type===1?'收入':'支出'}}笔数</text>
 				<text>&nbsp;&nbsp;{{data.count}}笔</text>
 			</view>
 			<charts :chartData="chartDataLine" type="line" :opts="optsLine"></charts>
 		</view>
 		<view class="box m-t-2">
 			<view class="top">
-				<text class="text">支出占比概况</text>
+				<text class="text">{{type===1?'收入':'支出'}}占比概况</text>
 			</view>
 			<hr>
 
@@ -76,16 +77,16 @@
 		</view>
 		<view class="box m-t-2">
 			<view class="top">
-				<text class="text">支出类目排行</text>
+				<text class="text">{{type===1?'收入':'支出'}}类目排行</text>
 			</view>
 			<hr>
 			<view v-for="(category,index) in data.category" :key="category.typeid" class="flex-cen m-t-1">
 				<uni-icons type="image" :size="40" color="#ffbcc9" />
 				<view class="item m-l-4">
 					<text>{{category.name}}</text>
-					<view class="han" :style="{background:color[(index)%9],width:chartDataPie.series&&chartDataPie.series[0].data[index].value/zMoney*100+'%'}"></view>
+					<view class="han" :style="{background:color[(index)%9],width:chartDataPie.series&&chartDataPie.series[0].data[index].value/(type===1?sMoney:zMoney)*100+'%'}"></view>
 					<view class="flex">
-						<text class="a1">本月共支出￥{{category.sum}}</text>
+						<text class="a1">本月共{{type===1?'收入':'支出'}}￥{{category.sum}}</text>
 						<text class="a1">消费{{category.count}}笔</text>
 					</view>
 				</view>
@@ -130,6 +131,7 @@
 			this.getData()
 		},
 		setup() {
+			const type = ref(2)
 			const selectTime = ref(transformCn(new Date()))
 			const year = ref(new Date().getFullYear())
 			const month = ref(new Date().getMonth() + 1)
@@ -189,12 +191,13 @@
 						userid:uni.getStorageSync('user')?.id,
 						startTime: `${year.value}-${month.value}-01`,
 						endTime: `${year.value}-${month.value}-${getMonthDay(year.value,month.value)}`,
+						type:type.value
 					}
 				})?.then(res => {
 					chartDataLine.value = {
 						categories: [],
 						series: [{
-							name: '支出',
+							name:type.value===1?'收入':'支出' ,
 							data: []
 						}]
 					}
@@ -241,6 +244,7 @@
 							value: item.value 
 						}
 					})
+					
 					console.log(chartDataLine.value, chartDataPie.value)
 					data.average = Math.floor(data.average / res.data.data1.length * 100) / 100
 				})
@@ -264,6 +268,7 @@
 				optsLine,
 				chartDataPie,
 				color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
+				type
 
 			}
 		}
