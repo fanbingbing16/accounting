@@ -78,7 +78,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 					mIncome = accAdd(mIncome,+item.money)
 					// allMonthMoney += +item.money
 					
-					allMonth = accAdd(allMonth,+item.money)
+					
 				}
 
 				else {
@@ -93,7 +93,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 
 					// allMonthMoney -= +item.money
 					 
-					allMonth = accSub(allMonth,+item.money)
+					
 				}
 				else {
 			
@@ -122,6 +122,8 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		allWMoney = wBudget - wExpenditure
 	}
 	let exec = /([0-9]{4})年([0-9]{1,2})月/.exec(date)
+	allMonth =accSub(mIncome,mExpenditure)
+	
 	return {
 		mExpenditure,
 		mIncome,
