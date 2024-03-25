@@ -210,11 +210,12 @@
 						time: '',
 						money: 0
 					}
-					data.average = 0
+					data.average = type.value===1?((sMoney.value*100)/(getMonthDay(year.value, month.value)*100)):((zMoney.value*100)/(getMonthDay(year.value, month.value)*100))
+					data.average = data.average.toFixed(2)
 					data.count = 0
 
 					res.data.data1.map(item => {
-						data.average += item.avg
+						
 						data.count += item.count
 						chartDataLine.value.series[0].data[new Date(item.time).getDate() - 1] = item.sum
 						if (item.sum >= data.max.money) {
@@ -246,7 +247,7 @@
 					})
 					
 					console.log(chartDataLine.value, chartDataPie.value)
-					data.average = Math.floor(data.average / res.data.data1.length * 100) / 100
+					
 				})
 			}
 
