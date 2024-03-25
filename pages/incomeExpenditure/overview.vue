@@ -8,7 +8,8 @@
 
 			<view class="title flex">
 
-				<picker :range="[YearRange,monthRange]" mode="multiSelector" :value="getPickerValue" @change="timeChange">
+				<picker :range="[YearRange,monthRange]" mode="multiSelector" :value="getPickerValue"
+					@change="timeChange">
 
 					<text>{{selectTime}}的收支概况</text>
 					<!-- 	<view class="calendar m-l-10">
@@ -40,7 +41,8 @@
 				<view class="text">￥{{sMoney}}</view>
 			</view>
 		</view>
-		<button class="m-t-2" style="background-color: rgb(234, 149, 24);color: white;" @click="type=type===1?2:1;getData()">切换收入/支出</button>
+		<button class="m-t-2" style="background-color: rgb(234, 149, 24);color: white;"
+			@click="type=type===1?2:1;getData()">切换收入/支出</button>
 		<view class="box m-t-2">
 			<view class="top">
 				<text class="text">{{type===1?'收入':'支出'}}趋势概况</text>
@@ -84,7 +86,9 @@
 				<uni-icons type="image" :size="40" color="#ffbcc9" />
 				<view class="item m-l-4">
 					<text>{{category.name}}</text>
-					<view class="han" :style="{background:color[(index)%9],width:chartDataPie.series&&chartDataPie.series[0].data[index].value/(type===1?sMoney:zMoney)*100+'%'}"></view>
+					<view class="han"
+						:style="{background:color[(index)%9],width:chartDataPie.series&&chartDataPie.series[0].data[index].value/(type===1?sMoney:zMoney)*100+'%'}">
+					</view>
 					<view class="flex">
 						<text class="a1">本月共{{type===1?'收入':'支出'}}￥{{category.sum}}</text>
 						<text class="a1">消费{{category.count}}笔</text>
@@ -143,7 +147,9 @@
 			const data = reactive({})
 			const chartDataLine = ref({})
 			const chartDataPie = ref({})
-			const optsLine = ref({})
+			const optsLine = ref({
+				dataLabel: false
+			})
 			for (let i = 1873; i <= 2173; i++) {
 				YearRange.value.push(i)
 			}
@@ -188,16 +194,16 @@
 				request({
 					url: '/expenditure/overview',
 					data: {
-						userid:uni.getStorageSync('user')?.id,
+						userid: uni.getStorageSync('user')?.id,
 						startTime: `${year.value}-${month.value}-01`,
 						endTime: `${year.value}-${month.value}-${getMonthDay(year.value,month.value)}`,
-						type:type.value
+						type: type.value
 					}
 				})?.then(res => {
 					chartDataLine.value = {
 						categories: [],
 						series: [{
-							name:type.value===1?'收入':'支出' ,
+							name: type.value === 1 ? '收入' : '支出',
 							data: []
 						}]
 					}
@@ -210,12 +216,13 @@
 						time: '',
 						money: 0
 					}
-					data.average = type.value===1?((sMoney.value*100)/(getMonthDay(year.value, month.value)*100)):((zMoney.value*100)/(getMonthDay(year.value, month.value)*100))
+					data.average = type.value === 1 ? ((sMoney.value * 100) / (getMonthDay(year.value, month
+						.value) * 100)) : ((zMoney.value * 100) / (getMonthDay(year.value, month.value) * 100))
 					data.average = data.average.toFixed(2)
 					data.count = 0
 
 					res.data.data1.map(item => {
-						
+
 						data.count += item.count
 						chartDataLine.value.series[0].data[new Date(item.time).getDate() - 1] = item.sum
 						if (item.sum >= data.max.money) {
@@ -242,12 +249,12 @@
 					chartDataPie.value.series[0].data = chartDataPie.value.series[0].data.map(item => {
 						return {
 							name: item.name,
-							value: item.value 
+							value: item.value
 						}
 					})
-					
+
 					console.log(chartDataLine.value, chartDataPie.value)
-					
+
 				})
 			}
 
