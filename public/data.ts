@@ -25,7 +25,22 @@ export const getMWData = async (change : boolean = false, date : string, search 
 				userid: uni.getStorageSync('user')?.id
 			}
 		})
-		budgetData = budget.data
+		// budgetData = budget.data
+		budgetData = budget.data.reduce((accumulator, currentValue) => {  
+		  // 查找累加器中是否已存在具有相同值的对象  
+		  const existingObject = accumulator.find(obj => obj.typeid === currentValue.typeid);  
+		    
+		  if (existingObject) {  
+		    
+		    existingObject.total_budget += currentValue.total_budget;  
+			existingObject.total_expenditure += currentValue.total_expenditure;
+		  } else {  
+		    // 如果不存在，则将当前对象添加到累加器中  
+		    accumulator.push(currentValue);  
+		  }  
+		    
+		  return accumulator;  
+		}, []);  
 		if (type === 'month') {
 			mBudget = 0
 		} else {
@@ -34,10 +49,10 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		budgetData.map(item => {
 			if (type === 'month') {
 				// mBudget += +item.money
-				mBudget = accAdd(mBudget,+item.money)
+				mBudget = accAdd(mBudget,+item.total_budget)
 			} else {
 				// wBudget += +item.money
-				wBudget = accAdd(wBudget,+item.money)
+				wBudget = accAdd(wBudget,+item.total_budget)
 			}
 		})
 

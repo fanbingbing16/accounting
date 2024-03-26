@@ -50,7 +50,10 @@
 			</view>
 		</view>
 		<view class="search m-t-2 m-b-2 flex">
-			<text class="text-1">分类预算</text>
+			<text class="text-1">分类</text>
+			<text class="text-1">总预算</text>
+			
+			<text class="text-1">剩余预算</text>
 			<view class="flex-cen" @click="goToPage">
 				<uni-icons type="plusempty" color="red"></uni-icons>
 				<text class="text">新建</text>
@@ -63,12 +66,14 @@
 		</view>
 		<view class="list">
 			<view class="flex list-item" v-for="item in budgetData" :key="item.id">
-				<view class="flex-cen">
+				<view class="flex-cen item-one">
 					<uni-icons type="image" size="26px"></uni-icons>
 					<text class="text">{{item.name}}</text>
 				</view>
+				
+				<text class="text item-one">￥{{item.total_budget}}</text>
+				<text class="text item-one" :style="{color:accSub(item.total_budget,item.total_expenditure)<=0?'red':''}">￥{{accSub(item.total_budget,item.total_expenditure)}}</text>
 
-				<text class="text">￥{{item.money}}</text>
 			</view>
 		</view>
 	</view>
@@ -88,6 +93,7 @@
 		computed,
 		reactive
 	} from 'vue'
+	import {accSub} from '@/public/handelAddSub.js'
 	export default {
 		onShow() {
 			this.getData()
@@ -130,7 +136,8 @@
 				if (type.value === 'month') {
 					selectTime.value = YearRange.value[e.detail.value[0]] + '年' + monthRange.value[e.detail.value[1]] + '月'
 				} else {
-					selectTime.value = YearRange.value[e.detail.value[0]] + '年' + monthRange.value[e.detail.value[1]] + '月' +
+					selectTime.value = YearRange.value[e.detail.value[0]] + '年' + monthRange.value[e.detail.value[1]] +
+						'月' +
 						dateRange.value[e.detail.value[2]] + '日'
 					day.value = dateRange.value[e.detail.value[2]]
 				}
@@ -145,7 +152,8 @@
 				changeData[e.detail.column] = e.detail.value
 				if (e.detail.column < 2) {
 					dateRange.value = []
-					for (let i = 1; i <= getMonthDay(YearRange.value[changeData[0]] || year, monthRange.value[changeData[1]] ||
+					for (let i = 1; i <= getMonthDay(YearRange.value[changeData[0]] || year, monthRange.value[changeData[
+								1]] ||
 							month); i++) {
 						dateRange.value.push(i)
 					}
@@ -192,7 +200,8 @@
 
 				if (str === 'month') {
 					selectTime.value = transformCn(new Date(
-						`${YearRange.value[getPickerValue.value[0]]}-${monthRange.value[getPickerValue.value[1]]}-1`))
+						`${YearRange.value[getPickerValue.value[0]]}-${monthRange.value[getPickerValue.value[1]]}-1`
+						))
 				} else {
 
 					selectTime.value = transformCn(new Date(
@@ -251,7 +260,8 @@
 				timeColumnChange,
 				budgetData,
 				moreData,
-				goToPage
+				goToPage,
+				accSub
 			}
 		},
 	}
@@ -277,14 +287,17 @@
 				padding: 4px;
 				margin-top: 0.8vh;
 				display: flex;
-				justify-content: space-between;
+				// justify-content: space-between;
 				font-size: 16px;
 				align-items: center;
-
+.item-one{
+	width: 28%;
+	text-align: center;
+}
 				::v-deep .uni-icons {
 
 					color: $uni-color-warning !important;
-					margin-right: 10px;
+					margin-right: 4px;
 				}
 
 				.description {
@@ -330,6 +343,7 @@
 			}
 
 			.title-1 {
+			
 				font-size: 18px;
 				font-weight: 600;
 
@@ -360,7 +374,10 @@
 			justify-content: space-between;
 			font-size: 18px;
 			font-weight: 600;
-
+.text-1{
+	width: 28%;
+	    text-align: center;
+}
 			.text {
 				color: red;
 			}
