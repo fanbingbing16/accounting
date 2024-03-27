@@ -49,10 +49,10 @@
 				<text>￥{{type==='month'?moreData.averaM:moreData.averaW}}</text>
 			</view>
 		</view>
-		<view class="search m-t-2 m-b-2 flex">
+		<view class="search m-t-2 m-b-1 flex">
 			<text class="text-1">分类</text>
 			<text class="text-1">总预算</text>
-			
+
 			<text class="text-1">剩余预算</text>
 			<view class="flex-cen" @click="goToPage">
 				<uni-icons type="plusempty" color="red"></uni-icons>
@@ -64,15 +64,16 @@
 			<img src="../../static/img/miao/1.png" style="width: 100%;" />
 			<text class="flex-cen">抱歉您还没有设置分类预算哦</text>
 		</view>
-		<view class="list">
+		<view class="list" :style="{height:height}">
 			<view class="flex list-item" v-for="item in budgetData" :key="item.id">
 				<view class="flex-cen item-one">
 					<uni-icons type="image" size="26px"></uni-icons>
 					<text class="text">{{item.name}}</text>
 				</view>
-				
+
 				<text class="text item-one">￥{{item.total_budget}}</text>
-				<text class="text item-one" :style="{color:accSub(item.total_budget,item.total_expenditure)<=0?'red':''}">￥{{accSub(item.total_budget,item.total_expenditure)}}</text>
+				<text class="text item-one"
+					:style="{color:accSub(item.total_budget,item.total_expenditure)<=0?'red':''}">￥{{accSub(item.total_budget,item.total_expenditure)}}</text>
 
 			</view>
 		</view>
@@ -91,9 +92,13 @@
 	import {
 		ref,
 		computed,
-		reactive
+		reactive,
+		
+		nextTick
 	} from 'vue'
-	import {accSub} from '@/public/handelAddSub.js'
+	import {
+		accSub
+	} from '@/public/handelAddSub.js'
 	export default {
 		onShow() {
 			this.getData()
@@ -113,6 +118,8 @@
 			const month = ref(new Date().getMonth() + 1)
 			const day = ref(new Date().getDate())
 			const moreData = reactive({})
+			const height = ref(0)
+
 			const getPickerValue = computed(() => {
 				const exec = /([0-9]{4})年([0-9]{1,2})月/.exec(selectTime.value)
 				const exec2 = /([0-9]{4})年([0-9]{1,2})月([0-9]{1,2})日/.exec(selectTime.value)
@@ -201,7 +208,7 @@
 				if (str === 'month') {
 					selectTime.value = transformCn(new Date(
 						`${YearRange.value[getPickerValue.value[0]]}-${monthRange.value[getPickerValue.value[1]]}-1`
-						))
+					))
 				} else {
 
 					selectTime.value = transformCn(new Date(
@@ -234,7 +241,16 @@
 						sMoney.value = res.wIncome
 						zMoney.value = res.wExpenditure
 					}
-
+					
+					nextTick(() => {
+						const classNames = ['left', 'uni-navbar','card', 'two-title', 'search']
+						let totalHeight = 0
+						classNames.map(item => {
+							totalHeight += document.querySelector('.' + item).offsetHeight
+						})
+						
+						height.value = `calc(100vh - ${totalHeight}px - 2vh)`
+					})
 				})
 			}
 			return {
@@ -261,7 +277,8 @@
 				budgetData,
 				moreData,
 				goToPage,
-				accSub
+				accSub,
+				height
 			}
 		},
 	}
@@ -269,6 +286,9 @@
 <style lang="scss" scoped>
 	.budget {
 		padding: 0 20px 20px;
+
+		height: calc(100vh - 3vh);
+		overflow-y: hidden;
 
 		::v-deep .uni-navbar__header-container {
 			justify-content: center;
@@ -280,7 +300,8 @@
 		}
 
 		.list {
-			margin-top: 1vh;
+			overflow-y: auto;
+			// margin-top: 1vh;
 			background-image: url('../../../static/img/miao/2.png');
 
 			.list-item {
@@ -290,10 +311,12 @@
 				// justify-content: space-between;
 				font-size: 16px;
 				align-items: center;
-.item-one{
-	width: 28%;
-	text-align: center;
-}
+
+				.item-one {
+					width: 28%;
+					text-align: center;
+				}
+
 				::v-deep .uni-icons {
 
 					color: $uni-color-warning !important;
@@ -308,6 +331,9 @@
 
 			.list-item:hover {
 				background: #f3f3f3;
+			}
+			.list-item:first-child{
+				margin-top: 0;
 			}
 		}
 
@@ -343,7 +369,7 @@
 			}
 
 			.title-1 {
-			
+
 				font-size: 18px;
 				font-weight: 600;
 
@@ -374,10 +400,12 @@
 			justify-content: space-between;
 			font-size: 18px;
 			font-weight: 600;
-.text-1{
-	width: 28%;
-	    text-align: center;
-}
+
+			.text-1 {
+				width: 28%;
+				text-align: center;
+			}
+
 			.text {
 				color: red;
 			}
