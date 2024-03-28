@@ -1,17 +1,17 @@
 {
   "id": "uni-tabbar",
-  "displayName": "底部选项卡模板",
+  "displayName": "",
   "version": "0.0.9",
-  "description": "中间带+号的底部选项卡",
+  "description": "中",
   "keywords": [
     "tabbar",
     "uni-tabbar",
-    "选项卡"
+    ""
   ],
   "dcloudext": {
     "category": [
-      "前端页面模板",
-      "uni-app前端项目模板"
+      "",
+      ""
     ],
     "sale": {
       "regular": {
@@ -76,6 +76,7 @@
     }
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "xlsx": "^0.18.5"
   }
 }

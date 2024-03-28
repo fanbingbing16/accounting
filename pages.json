@@ -112,6 +112,13 @@
 				"navigationStyle": "custom"
 			}
 		
+		},
+		{
+			"path": "pages/automatic/picture",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
 		}
 	],
 	"globalStyle": {
