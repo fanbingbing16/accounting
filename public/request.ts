@@ -1,4 +1,4 @@
-const baseurl = 'https://103.133.177.119:3000'
+const baseurl = 'https://zhangyanling.top/api'
 // const baseurl = 'http://localhost:3000'
 interface dataObj {
 	url : string, data : any, header ?: any, method ?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'OPTIONS', dataType ?: string, timeout ?: number, mustLogin ?: boolean
