@@ -91,6 +91,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 				if (type === 'month') {
 					
 					mIncome = accAdd(mIncome,+item.money)
+					console.log(mIncome,item.money,'monet')
 					// allMonthMoney += +item.money
 					
 					
