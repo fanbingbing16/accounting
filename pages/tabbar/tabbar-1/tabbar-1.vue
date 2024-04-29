@@ -5,7 +5,8 @@
 
 			<view class="title flex">
 
-				<picker :range="[YearRange,monthRange]" mode="multiSelector" :value="getPickerValue" @change="timeChange">
+				<picker :range="[YearRange,monthRange]" mode="multiSelector" :value="getPickerValue"
+					@change="timeChange">
 
 					<text>{{selectTime}}的账目明细</text>
 					<!-- 	<view class="calendar m-l-10">
@@ -41,8 +42,8 @@
 		</view>
 		<view class="search">
 			<view class="flex-cen">
-				<uni-search-bar :focus="true" v-model="searchValue" @input="input" placeholder="搜索账单/备注/分类等" @confirm="search"
-					clearButton="auto" cancelButton="none">
+				<uni-search-bar :focus="true" v-model="searchValue" @input="input" placeholder="搜索账单/备注/分类等"
+					@confirm="search" clearButton="auto" cancelButton="none">
 				</uni-search-bar>
 				<view class="flex-cen" @click="goToPage('')">
 					<uni-icons type="plusempty" color="red"></uni-icons>
@@ -63,7 +64,8 @@
 						<uni-icons type="image" size="26px"></uni-icons>
 						<text class="text">{{item2.name}}</text>
 					</view>
-					<text class="text">{{item2.description}}</text>
+					<text
+						class="text">{{item2.description&&item2.description.length>10?(item2.description.slice(0,7)+'...'):item2.description}}</text>
 					<text class="text">{{item2.type==='1'?'':'-'}}￥{{item2.money}}</text>
 				</view>
 			</view>
@@ -92,7 +94,11 @@
 		request
 	} from '@/public/request.ts'
 	import dataVue from '@/pages/comm/data'
-	import {accAdd,accSub,accChu} from '@/public/handelAddSub.js'
+	import {
+		accAdd,
+		accSub,
+		accChu
+	} from '@/public/handelAddSub.js'
 	export default {
 		components: {
 			dataVue
@@ -181,8 +187,9 @@
 
 			const transformCnF = computed(() => {
 
-				return transformCn(selectTime.value ? (typeof selectTime.value === 'object' ? selectTime.value : new Date(
-					selectTime.value)) : new Date())
+				return transformCn(selectTime.value ? (typeof selectTime.value === 'object' ? selectTime.value :
+					new Date(
+						selectTime.value)) : new Date())
 			})
 			return {
 				accAdd,
@@ -329,7 +336,7 @@
 
 			.list {
 				margin-top: 1vh;
-				background-image: url('../../../static/img/miao/2.png');
+				// background-image: url('../../../static/img/miao/2.png');
 
 				.list-item {
 					padding: 4px;

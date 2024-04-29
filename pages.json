@@ -14,6 +14,24 @@
 			}
 		},
 		{
+			"path": "pages/my/billScan/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/billScan/recognizedBill",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/my/billScan/userGuide",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/tabbar/tabbar-1/tabbar-1",
 			"style": {
 				"navigationStyle": "custom"
@@ -112,18 +130,12 @@
 				"navigationStyle": "custom"
 			}
 		
-		},
-		{
-			"path": "pages/automatic/picture",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		
 		}
+		
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "记账",
+		"navigationBarTitleText": "小猫记账",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},

@@ -1,7 +1,22 @@
 const baseurl = 'https://zhangyanling.top/api'
-// const baseurl = 'http://localhost:3000'
+// const baseurl = 'http://localhost:3000/api'
 interface dataObj {
 	url : string, data : any, header ?: any, method ?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'OPTIONS', dataType ?: string, timeout ?: number, mustLogin ?: boolean
+}
+const promiseData : any = {
+
+}
+function generateId(data : any) {
+	let str : string = ''
+	if (data.url) str += data.url
+	if (data.data) {
+		for (const key in data.data) {
+			str += String(key)
+			if (data.data[key]) str += JSON.stringify(data.data[key])
+		}
+	}
+
+	return str
 }
 export function request(data : dataObj) {
 
@@ -58,8 +73,19 @@ export function request(data : dataObj) {
 
 }
 function requestPass(data : dataObj) {
-	console.log('requestPass', data)
+
+	// const id = generateId(data)
+
+	
 	return new Promise((resolve, reject) => {
+		// if (promiseData[id]) {
+		// 	resolve(promiseData[id])
+		// 	return
+		// }
+		console.log(data,'data')
+		if(data.data&&!data.data?.userid){
+			data.data.userid = uni.getStorageSync('user')?.id
+		}
 		uni.request({
 			url: baseurl + data.url,
 			data: data.data,
@@ -75,8 +101,11 @@ function requestPass(data : dataObj) {
 					})
 					reject(option.data)
 
-				} else
+				} else {
+					// promiseData[id] = option.data
 					resolve(option.data)
+				}
+
 			},
 			fail: (err) => {
 				console.log(err, 'err')

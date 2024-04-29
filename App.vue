@@ -28,6 +28,10 @@
 		display: flex;
 	}
 
+	uni-button[type='primary'] {
+		background-color: $uni-color-warning  !important;
+	}
+
 	.flex-cen {
 		display: flex;
 		justify-content: center;
