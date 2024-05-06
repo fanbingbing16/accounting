@@ -1,5 +1,5 @@
-// const baseurl = 'https://zhangyanling.top/api'
-const baseurl = 'http://localhost:3000/api'
+const baseurl = 'https://zhangyanling.top/api'
+// const baseurl = 'http://localhost:3000/api'
 interface dataObj {
 	url : string, data : any, header ?: any, method ?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'OPTIONS', dataType ?: string, timeout ?: number, mustLogin ?: boolean
 }
@@ -86,7 +86,7 @@ function requestPass(data : dataObj) {
 			}
 		} else {
 			
-			if ( new Date().getTime() < 3000 -timeData[id] && timeData[id]) {
+			if ( new Date().getTime()-timeData[id] <1000  && timeData[id]) {
 				timeData[id] = new Date().getTime()
 				uni.showToast({
 					title: '请不要连续请求相同的内容',
