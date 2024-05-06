@@ -7,7 +7,7 @@
 		<view class="tag m-t-1 " v-for="(item,index) in data" :key="index">
 			<view class="flex">
 				<view class="shu"></view>
-				<text class="text">{{transformCnDayF(item.time)}}进行账图识别</text>
+				<text class="text title">{{transformCnDayF(item.time)}}进行账图识别</text>
 			</view>
 
 			<view class="list">
@@ -119,21 +119,23 @@
 </script>
 <style lang="scss" scoped>
 	.recognized-bill {
-		padding: 0 10px 10px 10px;
+		padding: 0 20px 20px 20px;
 
 		.no-data {
 			.img {
 				width: 100%;
 			}
 		}
-
+.title{
+	font-size: 18px;
+}
 		.tag {
 			display: flex;
 			flex-direction: column;
 
 			.shu {
 				width: 3px;
-				height: 14px;
+				height: 16px;
 				background: #ffce82;
 				margin-top: 4px;
 				margin-right: 10px;

@@ -17,6 +17,7 @@ let budgetData : any[] = []//分类预算列表
 
 export const getMWData = async (change : boolean = false, date : string, search : string = '', type : 'month' | 'work' = 'month', hasBudget : boolean = false) => {
 	let budget : any = {}
+	const start = new Date()
 	if (hasBudget) {
 		budget = await request({
 			url: '/budget',
@@ -26,21 +27,21 @@ export const getMWData = async (change : boolean = false, date : string, search 
 			}
 		})
 		// budgetData = budget.data
-		budgetData = budget.data.reduce((accumulator, currentValue) => {  
-		  // 查找累加器中是否已存在具有相同值的对象  
-		  const existingObject = accumulator.find(obj => obj.typeid === currentValue.typeid);  
-		    
-		  if (existingObject) {  
-		    
-		    existingObject.total_budget += currentValue.total_budget;  
-			existingObject.total_expenditure += currentValue.total_expenditure;
-		  } else {  
-		    // 如果不存在，则将当前对象添加到累加器中  
-		    accumulator.push(currentValue);  
-		  }  
-		    
-		  return accumulator;  
-		}, []);  
+		budgetData = budget.data.reduce((accumulator, currentValue) => {
+			// 查找累加器中是否已存在具有相同值的对象  
+			const existingObject = accumulator.find(obj => obj.typeid === currentValue.typeid);
+
+			if (existingObject) {
+
+				existingObject.total_budget += currentValue.total_budget;
+				existingObject.total_expenditure += currentValue.total_expenditure;
+			} else {
+				// 如果不存在，则将当前对象添加到累加器中  
+				accumulator.push(currentValue);
+			}
+
+			return accumulator;
+		}, []);
 		if (type === 'month') {
 			mBudget = 0
 		} else {
@@ -49,10 +50,10 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		budgetData.map(item => {
 			if (type === 'month') {
 				// mBudget += +item.money
-				mBudget = accAdd(mBudget,+item.total_budget)
+				mBudget = accAdd(mBudget, +item.total_budget)
 			} else {
 				// wBudget += +item.money
-				wBudget = accAdd(wBudget,+item.total_budget)
+				wBudget = accAdd(wBudget, +item.total_budget)
 			}
 		})
 
@@ -89,31 +90,31 @@ export const getMWData = async (change : boolean = false, date : string, search 
 			if (item.type === '1') {
 
 				if (type === 'month') {
-					
-					mIncome = accAdd(mIncome,+item.money)
-					
+
+					mIncome = accAdd(mIncome, +item.money)
+
 					// allMonthMoney += +item.money
-					
-					
+
+
 				}
 
 				else {
-					wIncome = accAdd(wIncome,+item.money)
-					
+					wIncome = accAdd(wIncome, +item.money)
+
 					// allWMoney += +item.money
 				}
 			} else {
 
 				if (type === 'month') {
-					mExpenditure = accAdd(mExpenditure,+item.money)
+					mExpenditure = accAdd(mExpenditure, +item.money)
 
 					// allMonthMoney -= +item.money
-					 
-					
+
+
 				}
 				else {
-			
-					wExpenditure = accAdd(wExpenditure,+item.money)
+
+					wExpenditure = accAdd(wExpenditure, +item.money)
 					// allWMoney -= +item.money
 				}
 			}
@@ -138,8 +139,9 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		allWMoney = wBudget - wExpenditure
 	}
 	let exec = /([0-9]{4})年([0-9]{1,2})月/.exec(date)
-	allMonth =accSub(mIncome,mExpenditure)
-	
+	allMonth = accSub(mIncome, mExpenditure)
+	const endTime = new Date()
+	console.log('start:', start, 'end:', endTime)
 	return {
 		mExpenditure,
 		mIncome,
@@ -199,4 +201,35 @@ export function getWeekDataList(data : string) {
 	}
 
 	return weekList
+}
+
+// 复制
+export function copyClick(context : string) {
+	navigator.clipboard.writeText(context)
+		.then(() => {
+			uni.showToast({
+				icon: 'success',
+				title: '复制成功'
+			})
+			setTimeout(() => {
+				uni.hideToast()
+			}, 2000)
+		})
+		.catch(() => {
+			const input = document.createElement('input')
+			document.body.appendChild(input)
+			input.setAttribute('value', context)
+			input.select()
+			if (document.execCommand('copy')) {
+				document.execCommand('copy')
+				uni.showToast({
+					icon: 'success',
+					title: '复制成功'
+				})
+				setTimeout(() => {
+					uni.hideToast()
+				}, 2000)
+			}
+			document.body.removeChild(input)
+		})
 }

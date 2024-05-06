@@ -1,11 +1,12 @@
-const baseurl = 'https://zhangyanling.top/api'
-// const baseurl = 'http://localhost:3000/api'
+// const baseurl = 'https://zhangyanling.top/api'
+const baseurl = 'http://localhost:3000/api'
 interface dataObj {
 	url : string, data : any, header ?: any, method ?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'OPTIONS', dataType ?: string, timeout ?: number, mustLogin ?: boolean
 }
 const promiseData : any = {
 
 }
+const timeData : any = {}
 function generateId(data : any) {
 	let str : string = ''
 	if (data.url) str += data.url
@@ -74,16 +75,38 @@ export function request(data : dataObj) {
 }
 function requestPass(data : dataObj) {
 
-	// const id = generateId(data)
+	const id = generateId(data)
 
-	
+
 	return new Promise((resolve, reject) => {
-		// if (promiseData[id]) {
-		// 	resolve(promiseData[id])
-		// 	return
-		// }
-		console.log(data,'data')
-		if(data.data&&!data.data?.userid){
+		if (data.method === 'GET' || !data.method) {
+			if (promiseData[id]) {
+				resolve(promiseData[id])
+				return
+			}
+		} else {
+			
+			if ( new Date().getTime() < 3000 -timeData[id] && timeData[id]) {
+				timeData[id] = new Date().getTime()
+				uni.showToast({
+					title: '请不要连续请求相同的内容',
+					icon: 'none'
+				})
+				reject({})
+				return
+			}
+			timeData[id] = new Date().getTime()
+			const urls = data.url.split('/')
+			for (const key in promiseData) {
+				if (urls.some(url => key.includes(url))) {
+					promiseData[key] = null
+					delete promiseData[key]
+				}
+			}
+		}
+
+		console.log(data, 'data')
+		if (data.data && !data.data?.userid) {
 			data.data.userid = uni.getStorageSync('user')?.id
 		}
 		uni.request({
@@ -102,7 +125,7 @@ function requestPass(data : dataObj) {
 					reject(option.data)
 
 				} else {
-					// promiseData[id] = option.data
+					promiseData[id] = option.data
 					resolve(option.data)
 				}
 

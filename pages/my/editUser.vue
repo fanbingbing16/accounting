@@ -8,7 +8,8 @@
 			</view>
 
 		</view> -->
-		<uni-forms :modelValue="formData" :rules="rules" label-position="top" class="m-t-4" :ref="getForm">
+		<uni-forms :modelValue="formData" :rules="rules" label-position="top" class="m-t-4" :ref="getForm"
+			label-width="100%">
 			<uni-forms-item required label="姓名" name="name">
 				<uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" />
 			</uni-forms-item>
@@ -16,6 +17,16 @@
 				<uni-file-picker limit="1" :del-icon="false" disable-preview :auto-upload="false" file-mediatype="image"
 					v-model="formData.avter" @select="select"></uni-file-picker>
 			</uni-forms-item>
+			<uni-forms-item label="邀请码" name="parent">
+				<uni-easyinput type="text" v-model="formData.parent" placeholder="请输入邀请者给的邀请码"
+					:disabled="!!user.parent" />
+			</uni-forms-item>
+			<text>邀请码提交后不可更改</text>
+			<uni-forms-item label="本人邀请码" name="code" class="flex">
+				<uni-easyinput type="text" v-model="formData.code" placeholder="请输入邀请码" disabled class="m-r-10" />
+				<button type="primary" @click="copyClick(formData.code)">复制</button>
+			</uni-forms-item>
+			<text>可复制该邀请码让其他用户填写，就可让其成为伞下用户，当伞下用户看广告或者点击广告产生收益后，自己可以获得收益</text>
 		</uni-forms>
 
 		<button type="primary" class="button m-t-4" @click="login">提交</button>
@@ -27,17 +38,24 @@
 		ref
 	} from "vue"
 	import {
+		copyClick
+	} from "@/public/data"
+	import {
 		request
-	} from "../../public/request"
+	} from "@/public/request"
 	export default {
 		setup() {
+
 			const formData = reactive({
 				name: '',
 				avter: [{
 					name: 'user',
 					extname: 'jpg',
-					url: ''
+					url: '',
+
 				}],
+				code: '',
+				parent: ''
 				// [{name:'user',extname:'jpg',url:''}]
 			})
 			const user = uni.getStorageSync('user')
@@ -47,6 +65,8 @@
 			else {
 				formData.avter = []
 			}
+			formData.code = user.code
+			formData.parent = user.parent
 			console.log(user, formData, 'user formdta ')
 			const form = ref(null)
 			const rules = reactive({
@@ -67,16 +87,22 @@
 				},
 				avter: {
 					rules: []
+				},
+				code: {
+					rules: []
+				},
+				parent: {
+					rules: []
 				}
 			})
 
 			function select(e) {
-				console.log(e.tempFiles[0].size,e.tempFiles[0].size/1024,'e.tempFiles[0].size')
-				if(e.tempFiles[0].size/1024>=400){
+				console.log(e.tempFiles[0].size, e.tempFiles[0].size / 1024, 'e.tempFiles[0].size')
+				if (e.tempFiles[0].size / 1024 >= 400) {
 					formData.avter = []
 					return uni.showToast({
-						title:'图片只能传小于400kb的',
-						icon:'none'
+						title: '图片只能传小于400kb的',
+						icon: 'none'
 					})
 				}
 				console.log(e, 'select')
@@ -111,8 +137,9 @@
 						data: {
 							username: formData.name,
 							avter: formData.avter[0]?.url || '',
-							userid: uni.getStorageSync('user')?.id
-
+							userid: uni.getStorageSync('user')?.id,
+							parent: formData.parent,
+							code: formData.code
 						},
 						mustLogin: false
 					}).then(res => {
@@ -145,7 +172,9 @@
 				rules,
 				getForm,
 				select,
-				back
+				back,
+				copyClick,
+				user
 			}
 		},
 	}
@@ -155,6 +184,14 @@
 		padding: 0 20px;
 		text-align: center;
 		color: #ccc;
+
+		::v-deep .uni-forms-item__content {
+			display: flex;
+
+			uni-button {
+				line-height: 38px;
+			}
+		}
 
 		.button {
 			background-color: $uni-color-warning;

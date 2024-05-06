@@ -12,6 +12,10 @@ export const list = [
 		type: "primary"
 	},
 	{
+		url: '/pages/budget/index',
+		text: '预算设置'
+	},
+	{
 		url: '/static/c2.png',
 		text: '密码锁',
 		badge: '1',
@@ -23,14 +27,17 @@ export const list = [
 		badge: '99',
 		type: "warning"
 	},
+	{
+		url: '/pages/my/umbrellaUsers',
+		text: '伞下用户',
+		badge: '99',
+		type: "warning"
+	},
 	// {
 	// 	url: '/static/c5.png',
 	// 	text: '购物清单'
 	// },
-	{
-		url: '/pages/budget/index',
-		text: '预算设置'
-	},
+	
 
 ]
 export const avatarList = [

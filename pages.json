@@ -26,6 +26,12 @@
 			}
 		},
 		{
+			"path": "pages/my/umbrellaUsers",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/my/billScan/userGuide",
 			"style": {
 				"navigationStyle": "custom"

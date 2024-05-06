@@ -1,8 +1,8 @@
 import App from './App.vue'
 
 if (uni.getSystemInfoSync().platform !== "devtools") {
-	console.log = () => {};
-	console.info= () => {};
+	// console.log = () => {};
+	// console.info= () => {};
 }
 // #ifndef VUE3
 import Vue from 'vue'

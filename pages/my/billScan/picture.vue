@@ -46,15 +46,15 @@
 
 					// 当图片加载完成后执行
 					img.onload = async () => {
-						console.log(this,this.canvas,'canvas')
+						console.log(this, this.canvas, 'canvas')
 						let hasCanvas = this.canvas
 						if (!this.canvas) {
 							this.canvas = document.createElement('canvas')
 							this.canvas.id = 'sourceImage'
 							this.ele.appendChild(this
 								.canvas);
-						}else{
-							this.canvas.setAttribute('style','display:block')
+						} else {
+							this.canvas.setAttribute('style', 'display:block')
 						}
 						const context = this.canvas.getContext('2d');
 
@@ -80,10 +80,22 @@
 						const gray = new cv.Mat();
 						cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
 
+						// 应用高斯模糊（可选）  
+						const blurred = new cv.Mat();
+						cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+
 						// 应用自适应阈值二值化  
 						const dst = new cv.Mat();
 						cv.adaptiveThreshold(gray, dst, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv
 							.THRESH_BINARY, 11, 12);
+						改善二值化后的图片质量  
+						应用形态学操作，先腐蚀后膨胀  
+						const kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(3, 3));
+						const eroded = new cv.Mat();
+						const dilated = new cv.Mat();
+						cv.dilate(dst, dilated, kernel);
+						// cv.erode(dilated, eroded, kernel);
+
 						const dstU8 = new cv.Mat();
 						dst.convertTo(dstU8, cv.CV_8U);
 						// 处理数据为4的倍数
@@ -99,7 +111,7 @@
 							}
 						}
 						const imgData = new ImageData(data, width, height);
-
+						// 将处理后的图像数据转换回RGBA格式并显示  
 
 						context.putImageData(imgData, 0, 0);
 						img.remove()
@@ -115,7 +127,7 @@
 							}
 						} = await Tesseract.recognize(dataURL, 'chi_sim', {
 							langPath: 'https://raw.githubusercontent.com/naptha/tessdata/gh-pages/4.0.0_fast',
-							psm:7,
+							psm: 7,
 							logger: m => {
 								console.log(m)
 								uni.hideLoading()
@@ -130,9 +142,9 @@
 						src.delete();
 						gray.delete();
 						dst.delete();
-						dstU8.delete();
+						// dstU8.delete();
 						this.$emit('text', text)
-						
+
 					}
 				})
 			},

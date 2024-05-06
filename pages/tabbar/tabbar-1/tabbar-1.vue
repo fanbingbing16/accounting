@@ -55,11 +55,18 @@
 		<view class="tag m-t-1 " v-for="(item,index) in data" :key="index">
 			<view class="flex">
 				<view class="shu"></view>
-				<text class="text">{{transformCnDayF(item.time)}}</text>
+				<text class="text">{{item.time}}</text>
+				<view class="button-list">
+					<text class="text" style="color: red;" @click="handleDeleteAll(index)">删除</text>
+					<!-- <text class="text">修改</text> -->
+				</view>
+
 			</view>
 
 			<view class="list">
-				<view class="flex list-item" v-for="item2 in item.data" :key="item2.id">
+				<view class="flex list-item" v-for="(item2,index2) in item.data" :key="item2.id"
+					@touchstart.passive="onTouchStart" @touchmove.passive="onTouchMove"
+					@touchend.passive="onTouchEnd(index,index2)">
 					<view class="flex-cen">
 						<uni-icons type="image" size="26px"></uni-icons>
 						<text class="text">{{item2.name}}</text>
@@ -67,6 +74,12 @@
 					<text
 						class="text">{{item2.description&&item2.description.length>10?(item2.description.slice(0,7)+'...'):item2.description}}</text>
 					<text class="text">{{item2.type==='1'?'':'-'}}￥{{item2.money}}</text>
+					<view class="action-buttons button-list"
+						:style="{ transform: show[index][index2]?`translateX(${-82}px)`:'' }">
+
+						<text class="text" style="color: red;" @click="handleDelete(index,index2)">删除</text>
+						<!-- <text class="text" @click="handleEdit(index,index2)">修改</text> -->
+					</view>
 				</view>
 			</view>
 		</view>
@@ -81,7 +94,8 @@
 <script>
 	import {
 		transformCn,
-		transformCnDay
+		transformCnDay,
+		transformNoTime
 	} from '@/public/transform.ts'
 	import {
 		getMWData
@@ -108,6 +122,13 @@
 
 			this.getData()
 		},
+		mounted() {
+			document.body.addEventListener('scroll', function(event) {
+				// 你的滚动事件处理代码  
+			}, {
+				passive: true
+			});
+		},
 		setup() {
 			const selectTime = ref(transformCn(new Date()))
 			const selectDate = ref(new Date())
@@ -120,7 +141,7 @@
 			const allMoney = ref(0)
 			const zMoney = ref(0)
 			const sMoney = ref(0)
-			let calendarEl = null
+			const show = ref([])
 			for (let i = 1873; i <= 2173; i++) {
 				YearRange.value.push(i)
 			}
@@ -159,7 +180,7 @@
 			}
 
 			function transformCnDayF(date) {
-				console.log(date, 'date')
+
 
 				// getData(searchValue.value)
 				return transformCnDay(typeof date === 'object' ? date : new Date(date))
@@ -178,24 +199,126 @@
 			function getData(search = '') {
 				getMWData(true, selectTime.value, search).then(res => {
 					data.value = res.data
+					show.value = data.value.map((item, index) => {
+						data.value[index].time = transformCnDay(typeof item.time === 'object' ? item.time :
+							new Date(item.time))
+
+						return item.data.map(() => {
+
+							return false
+						})
+					})
 					allMoney.value = res.allMonth
 					sMoney.value = res.mIncome
 					zMoney.value = res.mExpenditure
 				})
 
 			}
+			let startX
+			let isSliding = false
+			let slideDistance = 0
 
-			const transformCnF = computed(() => {
+			function onTouchStart(e) {
+				// 记录开始滑动的位置  
+				startX = e.touches[0].clientX;
+				isSliding = true;
+			}
 
-				return transformCn(selectTime.value ? (typeof selectTime.value === 'object' ? selectTime.value :
-					new Date(
-						selectTime.value)) : new Date())
-			})
+			function onTouchMove(e) {
+				if (isSliding) {
+					// 计算滑动距离  
+					const deltaX = e.touches[0].clientX - startX;
+					slideDistance = deltaX;
+				}
+			}
+
+			function onTouchEnd(index, index2) {
+				isSliding = false;
+				console.log(startX, slideDistance, 'startX')
+				// 根据滑动距离决定是否显示按钮面板  
+				show.value = show.value.map(item => item.map(() => false))
+				if (slideDistance < -100) {
+					// 展示按钮面板  
+					show.value[index][index2] = true
+				} else {
+					// 隐藏按钮面板  
+					slideDistance = 0;
+
+				}
+			}
+
+			function handleDeleteAll(index) {
+				uni.showModal({
+					content: `确定删除${data.value[index].time}当天所有的数据吗？`,
+					success: (e) => {
+						if (e.confirm) {
+							request({
+								url: '/expenditure/deletes',
+								method: 'POST',
+								data: {
+									time: transformNoTime(new Date(data.value[index].data[0].time))
+								}
+							}).then(res => {
+								if (res.status === 1) {
+									uni.showToast({
+										title: '删除成功',
+										icon: 'success'
+									})
+									
+									search()
+								}
+							})
+						}
+					}
+				})
+			}
+
+			function handleDelete(index, index2) {
+				// 删除逻辑  
+				uni.showModal({
+					content: '确定删除吗？',
+					success: (e) => {
+
+						if (e.confirm) {
+							console.log(data.value, index, index2, 'index index2')
+							request({
+								url: '/expenditure/delete',
+								method: 'POST',
+								data: {
+									id: data.value[index].data[index2].id
+								}
+							}).then(res => {
+								if (res.status === 1) {
+									uni.showToast({
+										title: '删除成功',
+										icon: 'success'
+									})
+									
+									search()
+								}
+							})
+
+						}
+
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: err,
+							icon: 'none'
+						})
+					}
+				})
+			}
+
+			function handleEdit() {
+				// 修改逻辑  
+			}
+
 			return {
 				accAdd,
 				accSub,
 				accChu,
-				transformCnF,
+
 				selectTime,
 				search,
 				input,
@@ -213,7 +336,14 @@
 				monthRange,
 				timeChange,
 				selectDate,
-				getPickerValue
+				getPickerValue,
+				onTouchEnd,
+				onTouchMove,
+				onTouchStart,
+				handleDelete,
+				handleEdit,
+				show,
+				handleDeleteAll
 			}
 		}
 	};
@@ -224,6 +354,17 @@
 		text-align: center;
 		// height: 100vh;
 		padding: 0 10px;
+
+		.action-buttons {
+			transition: transform 0.3s ease;
+			display: flex;
+			width: 24% !important;
+			position: absolute;
+			right: -86px;
+			background: white;
+			height: 100%;
+			line-height: 36px;
+		}
 
 		::v-deep .uni-navbar__header-container {
 			justify-content: center;
@@ -330,6 +471,17 @@
 				margin-right: 10px;
 			}
 
+			.button-list {
+				display: flex;
+				justify-content: flex-end;
+				width: 70%;
+
+				.text {
+					margin-left: 10px;
+					cursor: pointer;
+				}
+			}
+
 			.text {
 				font-weight: 600;
 			}
@@ -339,6 +491,7 @@
 				// background-image: url('../../../static/img/miao/2.png');
 
 				.list-item {
+					position: relative;
 					padding: 4px;
 					margin-top: 0.8vh;
 					display: flex;
