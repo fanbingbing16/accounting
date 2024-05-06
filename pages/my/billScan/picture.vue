@@ -142,7 +142,7 @@
 						src.delete();
 						gray.delete();
 						dst.delete();
-						// dstU8.delete();
+						dstU8.delete();
 						this.$emit('text', text)
 
 					}
