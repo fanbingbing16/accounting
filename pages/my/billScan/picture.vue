@@ -80,21 +80,21 @@
 						const gray = new cv.Mat();
 						cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
 
-						// 应用高斯模糊（可选）  
-						const blurred = new cv.Mat();
-						cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
+						// // 应用高斯模糊 
+						// const blurred = new cv.Mat();
+						// cv.GaussianBlur(gray, blurred, new cv.Size(5, 5), 0);
 
 						// 应用自适应阈值二值化  
 						const dst = new cv.Mat();
 						cv.adaptiveThreshold(gray, dst, 255, cv.ADAPTIVE_THRESH_MEAN_C, cv
 							.THRESH_BINARY, 11, 12);
-						改善二值化后的图片质量  
-						应用形态学操作，先腐蚀后膨胀  
+						// 改善二值化后的图片质量  
+						// 应用形态学操作，先腐蚀后膨胀  
 						const kernel = cv.getStructuringElement(cv.MORPH_RECT, new cv.Size(3, 3));
 						const eroded = new cv.Mat();
 						const dilated = new cv.Mat();
 						cv.dilate(dst, dilated, kernel);
-						// cv.erode(dilated, eroded, kernel);
+						// cv.erode(dst, eroded, kernel);
 
 						const dstU8 = new cv.Mat();
 						dst.convertTo(dstU8, cv.CV_8U);
