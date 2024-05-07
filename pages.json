@@ -14,6 +14,12 @@
 			}
 		},
 		{
+			"path": "pages/my/regularBookkeeping/detail",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/my/billScan/index",
 			"style": {
 				"navigationStyle": "custom"

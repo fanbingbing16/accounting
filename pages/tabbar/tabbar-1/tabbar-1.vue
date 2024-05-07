@@ -72,7 +72,7 @@
 						<text class="text">{{item2.name}}</text>
 					</view>
 					<text
-						class="text">{{item2.description&&item2.description.length>10?(item2.description.slice(0,7)+'...'):item2.description}}</text>
+						class="text">{{item2.description&&item2.description.length>10?(item2.description.slice(0,10)+'...'):item2.description}}</text>
 					<text class="text">{{item2.type==='1'?'':'-'}}￥{{item2.money}}</text>
 					<view class="action-buttons button-list"
 						:style="{ transform: show[index][index2]?`translateX(${-82}px)`:'' }">
