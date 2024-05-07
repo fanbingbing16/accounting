@@ -115,7 +115,7 @@
 							const data = [
 								['分类名称', '金额', '日期', '描述']
 							].concat(res.data.map(item => {
-								return [item.name, item.money,
+								return [item.name, (item.type==='1'?'':'-')+item.money,
 									transformNoTime(new Date(item.time)),
 									item.description || ''
 								]
