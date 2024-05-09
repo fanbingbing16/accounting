@@ -33,6 +33,9 @@
 		onHide() {
 			this.active = false;
 		},
+		mounted() {
+			uni.preloadPage({url: "/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"});
+		},
 		methods: {
 			goToPage(url) {
 				if (!url) return;

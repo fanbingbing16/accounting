@@ -23,6 +23,10 @@
 				<text class="text">{{data.typeName}}</text>
 			</view>
 			<view class="top">
+				<text class="text">记账周期</text>
+				<text class="text">{{data.every==='DAY'?'每天':(data.every==='WEEK'?'每周':'每月')}}</text>
+			</view>
+			<view class="top">
 				<text class="text">备注</text>
 				<text class="text">{{data.description||'无'}}</text>
 			</view>

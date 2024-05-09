@@ -109,10 +109,14 @@
 	} from '@/public/request.ts'
 	import dataVue from '@/pages/comm/data'
 	import {
-		accAdd,
-		accSub,
+
+
 		accChu
 	} from '@/public/handelAddSub.js'
+	import {
+		accAdd,
+		accSubtract
+	} from 'number-precision-ops'
 	export default {
 		components: {
 			dataVue
@@ -123,6 +127,8 @@
 			this.getData()
 		},
 		mounted() {
+			uni.preloadPage({url: "/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"});
+
 			document.body.addEventListener('scroll', function(event) {
 				// 你的滚动事件处理代码  
 			}, {
@@ -166,7 +172,7 @@
 
 
 			function goToPage(url = '') {
-				console.log(url || '/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa', 'cccc')
+				
 				uni.navigateTo({
 					url: url || '/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa'
 				})
@@ -264,7 +270,7 @@
 										title: '删除成功',
 										icon: 'success'
 									})
-									
+
 									search()
 								}
 							})
@@ -293,7 +299,7 @@
 										title: '删除成功',
 										icon: 'success'
 									})
-									
+
 									search()
 								}
 							})
@@ -316,9 +322,9 @@
 
 			return {
 				accAdd,
-				accSub,
-				accChu,
 
+				accChu,
+				accSubtract,
 				selectTime,
 				search,
 				input,
@@ -352,8 +358,12 @@
 <style lang="scss" scoped>
 	.content {
 		text-align: center;
-		// height: 100vh;
 		padding: 0 10px;
+		width: 100vw;
+		box-sizing: border-box;
+		overflow-x: hidden;
+		height: calc(100vh - 50px);
+		overflow-y: scroll;
 
 		.action-buttons {
 			transition: transform 0.3s ease;
@@ -421,7 +431,6 @@
 						width: 70vw;
 						background-color: #fbca8161;
 						border-radius: 10px;
-
 						content: ' ';
 						display: block;
 					}
@@ -430,7 +439,6 @@
 
 			.bottom-text {
 				font-weight: 600;
-
 			}
 		}
 
@@ -530,8 +538,6 @@
 		.calendar {
 			line-height: 120rpx;
 
-
-
 			::v-deep .uni-date-x--border {
 				border: 0;
 			}
@@ -539,7 +545,6 @@
 			::v-deep .uni-date-x {
 				background-color: #ea9528;
 				color: white;
-
 			}
 
 			::v-deep .uni-icons {

@@ -1,3 +1,4 @@
+const maxNumber = 999999999999999
 export function accAdd(num1, num2) {
 	// 将数字转为字符串  
 	const str1 = num1.toString();
@@ -62,9 +63,10 @@ export function accAdd(num1, num2) {
 		resultInteger = '0';
 	}
 	if (resultDecimal !== '') {
-		return Number(resultInteger + '.' + resultDecimal)
+		const result = Number(resultInteger + '.' + resultDecimal)
+		return result>=maxNumber ?resultInteger + '.' + resultDecimal:result
 	} else {
-		return +resultInteger;
+		return resultInteger>=maxNumber?resultInteger: +resultInteger;
 	}
 }
 export function accSub(arg1, arg2) {

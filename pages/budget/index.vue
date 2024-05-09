@@ -103,6 +103,9 @@
 		onShow() {
 			this.getData()
 		},
+		mounted() {
+			uni.preloadPage({url: "/pages/budget/add"});
+		},
 		setup() {
 			const selectTime = ref(transformCn(new Date()))
 			const YearRange = ref([])

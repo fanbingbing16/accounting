@@ -89,7 +89,12 @@
 		},
 		mounted() {
 			this.ele = this.$refs.billScan.$el
-
+			uni.preloadPage({
+				url: "/pages/my/billScan/recognizedBill"
+			});
+			uni.preloadPage({
+				url: "/pages/my/billScan/userGuide"
+			});
 		},
 		methods: {
 			goToPage(url) {
@@ -215,89 +220,88 @@
 			},
 			sub(index) {
 				uni.showModal({
-						content: '确定删除？',
-						success: (data) => {
+					content: '确定删除？',
+					success: (data) => {
 
-							console.log(data, 'dtaa')
-							if (data.confirm) {
-								this.formData.textStr.splice(index, 1)
-								this.formData.typeArr.splice(index, 1)
-							}
-
-						},
-						fail: (err) => {
-							uni.showToast({
-								title: err,
-								icon: 'none'
-							})
+						console.log(data, 'dtaa')
+						if (data.confirm) {
+							this.formData.textStr.splice(index, 1)
+							this.formData.typeArr.splice(index, 1)
 						}
 
-					}
-				)
-
-		},
-		back() {
-			uni.switchTab({
-				url: '/'
-			})
-		},
-		leanText(text) {
-			// 去除非打印字符和多余的空格  
-			return text.replace(
-					/[\u0000-\u001F\u007F-\u009F\u2000-\u2027\u2028-\u202F\u2060-\u206F\uFEFF\uFFF0-\uFFFD]/g, '')
-				.replace(/\s+/g, '  '); // 替换所有连续空格为一个空格  
-		},
-		upload() {
-			this.formData.textStr = ''
-			this.$refs.picture.chooseFile()
-		},
-		text(data) {
-			console.log(data, 'data')
-			this.ele.getElementsByTagName('canvas')[0].setAttribute('style', 'display:none')
-			this.formData.textStr = data.split('\n').filter(item => item.trim())
-			this.formData.typeArr = []
-			const regx = /^(.+)\s([0-9-+\.]+)$/
-			const regxMoney = /^([0-9-+\.]+)$/
-			const moneyData = []
-			this.formData.textStr = this.formData.textStr.map((item, index) => {
-				const today = new Date()
-				item = this.leanText(item)
-				item = item.replace('昨天', transformCn(new Date(today.setDate(today.getDate() - 1)), 'work'))
-				item = item.replace('今天', transformCn(new Date(), 'work'))
-				const result = parseAndValidateDateTime(item)
-
-				if (result.isValid) {
-					this.formData.typeArr[index] = 2
-					item = result.text
-				} else {
-					const exec = regx.exec(item)
-					if (regxMoney.test(item)) {
-						this.formData.typeArr[index] = 1
-					} else if (exec) {
-						this.formData.typeArr[index] = 3
-						item = exec[1]
-						moneyData.push({
-							index,
-							money: exec[2]
+					},
+					fail: (err) => {
+						uni.showToast({
+							title: err,
+							icon: 'none'
 						})
-					} else {
-						this.formData.typeArr[index] = 4
 					}
 
+				})
 
-				}
+			},
+			back() {
+				uni.switchTab({
+					url: '/'
+				})
+			},
+			leanText(text) {
+				// 去除非打印字符和多余的空格  
+				return text.replace(
+						/[\u0000-\u001F\u007F-\u009F\u2000-\u2027\u2028-\u202F\u2060-\u206F\uFEFF\uFFF0-\uFFFD]/g, '')
+					.replace(/\s+/g, '  '); // 替换所有连续空格为一个空格  
+			},
+			upload() {
+				this.formData.textStr = ''
+				this.$refs.picture.chooseFile()
+			},
+			text(data) {
+				console.log(data, 'data')
+				this.ele.getElementsByTagName('canvas')[0].setAttribute('style', 'display:none')
+				this.formData.textStr = data.split('\n').filter(item => item.trim())
+				this.formData.typeArr = []
+				const regx = /^(.+)\s([0-9-+\.]+)$/
+				const regxMoney = /^([0-9-+\.]+)$/
+				const moneyData = []
+				this.formData.textStr = this.formData.textStr.map((item, index) => {
+					const today = new Date()
+					item = this.leanText(item)
+					item = item.replace('昨天', transformCn(new Date(today.setDate(today.getDate() - 1)), 'work'))
+					item = item.replace('今天', transformCn(new Date(), 'work'))
+					const result = parseAndValidateDateTime(item)
 
-				return item
+					if (result.isValid) {
+						this.formData.typeArr[index] = 2
+						item = result.text
+					} else {
+						const exec = regx.exec(item)
+						if (regxMoney.test(item)) {
+							this.formData.typeArr[index] = 1
+						} else if (exec) {
+							this.formData.typeArr[index] = 3
+							item = exec[1]
+							moneyData.push({
+								index,
+								money: exec[2]
+							})
+						} else {
+							this.formData.typeArr[index] = 4
+						}
 
-			})
-			console.log(moneyData, this.formData, 'moneyData form data')
-			moneyData.forEach((element, index) => {
-				this.formData.textStr.splice(element.index + index, 0, element.money)
-				this.formData.typeArr.splice(element.index + index, 0, 1)
-			})
-		},
 
-	}
+					}
+
+					return item
+
+				})
+				console.log(moneyData, this.formData, 'moneyData form data')
+				moneyData.forEach((element, index) => {
+					this.formData.textStr.splice(element.index + index, 0, element.money)
+					this.formData.typeArr.splice(element.index + index, 0, 1)
+				})
+			},
+
+		}
 	}
 </script>
 

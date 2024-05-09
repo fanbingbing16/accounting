@@ -18,9 +18,13 @@
 
 <script lang="ts" setup>
 	import {request} from '@/public/request'
-	import {ref} from 'vue'
+	import {onMounted, ref} from 'vue'
 	import has from './has.vue'
 	import {transformNoTime} from '@/public/transform'
+	onMounted(()=>{
+		uni.preloadPage({url: "/pages/my/regularBookkeeping/detail"});
+		uni.preloadPage({url: "/pages/incomeExpenditure/addScheduleTask"});
+	})
 	const data = ref([])
 	function back() {
 		// uni.navigateBack({

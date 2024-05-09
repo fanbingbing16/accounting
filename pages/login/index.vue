@@ -26,7 +26,7 @@
 	} from "vue"
 	import {
 		request
-	} from "../../public/request"
+	} from "@/public/request"
 	export default {
 		setup() {
 			const formData = reactive({

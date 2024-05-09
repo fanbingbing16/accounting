@@ -1,5 +1,5 @@
 import { request } from '@/public/request'
-import { accAdd, accSub } from './handelAddSub'
+import {accAdd,accSubtract} from 'number-precision-ops'
 let mExpenditure = 0//本月总支出
 let mIncome = 0//本月总收入
 let mBudget = 0//本月总预算
@@ -139,7 +139,7 @@ export const getMWData = async (change : boolean = false, date : string, search 
 		allWMoney = wBudget - wExpenditure
 	}
 	let exec = /([0-9]{4})年([0-9]{1,2})月/.exec(date)
-	allMonth = accSub(mIncome, mExpenditure)
+	allMonth = accSubtract(mIncome, mExpenditure)
 	const endTime = new Date()
 	console.log('start:', start, 'end:', endTime)
 	return {

@@ -33,8 +33,8 @@
 			</uni-list-chat>
 		</uni-list>
 		<uni-popup ref="popup" type="dialog">
-			<uni-popup-dialog ref="inputClose" mode="input" title="设置密码锁住,不让别人看"  placeholder="请输入密码"
-				@confirm="dialogInputConfirm" ></uni-popup-dialog>
+			<uni-popup-dialog ref="inputClose" mode="input" title="设置密码锁住,不让别人看" placeholder="请输入密码"
+				@confirm="dialogInputConfirm"></uni-popup-dialog>
 		</uni-popup>
 	</view>
 </template>
@@ -55,7 +55,7 @@
 				list,
 				avatarList,
 				user: {},
-				password:''
+				password: ''
 			}
 		},
 		onLoad() {
@@ -80,10 +80,30 @@
 				}
 			})
 		},
+		mounted() {
+			uni.preloadPage({
+				url: '/pages/my/billScan/index'
+			});
+			uni.preloadPage({
+				url: '/pages/my/regularBookkeeping/index'
+			});
+			uni.preloadPage({
+				url: '/pages/budget/index'
+			});
+			uni.preloadPage({
+				url: '/pages/my/export'
+			});
+			uni.preloadPage({
+				url: '/pages/my/umbrellaUsers'
+			});
+			uni.preloadPage({
+				url: '/pages/my/editUser'
+			})
+		},
 		methods: {
-			dialogInputConfirm(e){
-				
-				uni.setStorageSync('password',e)
+			dialogInputConfirm(e) {
+
+				uni.setStorageSync('password', e)
 			},
 			gotoPage() {
 				uni.navigateTo({
