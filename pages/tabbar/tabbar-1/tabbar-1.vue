@@ -128,6 +128,8 @@
 		},
 		mounted() {
 			uni.preloadPage({url: "/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"});
+			uni.preloadPage({url: "/pages/incomeExpenditure/overview"});
+			uni.preloadPage({url: "/pages/budget/index"});
 
 			document.body.addEventListener('scroll', function(event) {
 				// 你的滚动事件处理代码  

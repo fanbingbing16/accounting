@@ -46,6 +46,9 @@
 		ref
 	} from 'vue'
 	export default {
+		mounted() {
+			uni.preloadPage({url: "/"});
+		},
 		setup() {
 			const users = ref([])
 

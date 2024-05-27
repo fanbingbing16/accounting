@@ -38,6 +38,9 @@
 		request
 	} from '@/public/request'
 	export default {
+		mounted() {
+			uni.preloadPage({url: "/"});
+		},
 		setup() {
 			const validForm = ref(null)
 			const valiFormData = reactive({

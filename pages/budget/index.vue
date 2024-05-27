@@ -105,6 +105,7 @@
 		},
 		mounted() {
 			uni.preloadPage({url: "/pages/budget/add"});
+			uni.preloadPage({url: "/"});
 		},
 		setup() {
 			const selectTime = ref(transformCn(new Date()))

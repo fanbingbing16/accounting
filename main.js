@@ -1,6 +1,6 @@
 import App from './App.vue'
-
-if (uni.getSystemInfoSync().platform !== "devtools") {
+console.log(process.env.NODE_ENV ,'process.env.NODE_ENV ')
+if (process.env.NODE_ENV !== "development") {
 	console.log = () => {};
 	console.info= () => {};
 }

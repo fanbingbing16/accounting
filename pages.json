@@ -68,18 +68,18 @@
 		// 	}
 		// },
 
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/tabbar-3-detial/tabbar-3-release/tabbar-3-release",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
+		// {
+		// 	"path": "pages/tabbar-3-detial/tabbar-3-video/tabbar-3-video",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa",
 			"style": {
@@ -138,6 +138,27 @@
 		},
 		{
 			"path": "pages/my/export",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
+		},
+		{
+			"path": "pages/my/importFile/importFile",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
+		},
+		{
+			"path": "pages/my/importFile/userGuide",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		
+		},
+		{
+			"path": "pages/my/importFile/recognizedBill",
 			"style": {
 				"navigationStyle": "custom"
 			}

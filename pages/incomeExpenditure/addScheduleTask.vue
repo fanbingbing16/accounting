@@ -122,6 +122,9 @@
 
 			}
 		},
+		mounted() {
+			uni.preloadPage({url: "/pages/my/regularBookkeeping/index"});
+		},
 		methods: {
 			submit(ref) {
 				this.$refs[ref].validate().then(res => {

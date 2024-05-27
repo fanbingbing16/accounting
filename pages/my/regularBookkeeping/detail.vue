@@ -121,6 +121,7 @@
 			}
 			onMounted(() => {
 				getData()
+				uni.preloadPage({url: "/pages/my/regularBookkeeping/index"});
 			});
 
 			const back = () => {

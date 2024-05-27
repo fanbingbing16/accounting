@@ -95,6 +95,7 @@
 			uni.preloadPage({
 				url: "/pages/my/billScan/userGuide"
 			});
+			uni.preloadPage({url: "/"});
 		},
 		methods: {
 			goToPage(url) {
@@ -222,7 +223,6 @@
 				uni.showModal({
 					content: '确定删除？',
 					success: (data) => {
-
 						console.log(data, 'dtaa')
 						if (data.confirm) {
 							this.formData.textStr.splice(index, 1)

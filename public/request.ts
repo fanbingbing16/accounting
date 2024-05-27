@@ -1,11 +1,12 @@
-const baseurl = 'https://zhangyanling.top/api'
-// const baseurl = 'http://localhost:3000/api'
+export const baseurl = 'https://zhangyanling.top/api'
+// export const baseurl = 'http://localhost:3000/api'
 interface dataObj {
-	url : string, data : any, header ?: any, method ?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'OPTIONS', dataType ?: string, timeout ?: number, mustLogin ?: boolean
+	url : string, data : any, header ?: any, method ?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'HEAD' | 'OPTIONS', 
+	dataType ?: string, timeout ?: number, mustLogin ?: boolean,
+	noLogin:Boolean
 }
-const promiseData : any = {
-
-}
+const promiseData : any = {}
+ 
 const timeData : any = {}
 function generateId(data : any) {
 	let str : string = ''
@@ -69,11 +70,11 @@ export function request(data : dataObj) {
 			return new Promise((resolve, reject) => { reject() })
 		}
 	} else {
-		return requestPass(data)
+		return requestPass(data,)
 	}
 
 }
-function requestPass(data : dataObj) {
+function requestPass(data : dataObj,) {
 
 	const id = generateId(data)
 
@@ -85,8 +86,8 @@ function requestPass(data : dataObj) {
 				return
 			}
 		} else {
-			
-			if ( new Date().getTime()-timeData[id] <1000  && timeData[id]) {
+
+			if (new Date().getTime() - timeData[id] < 1000 && timeData[id]) {
 				timeData[id] = new Date().getTime()
 				uni.showToast({
 					title: '请不要连续请求相同的内容',
@@ -105,8 +106,8 @@ function requestPass(data : dataObj) {
 			}
 		}
 
-		console.log(data, 'data')
-		if (data.data && !data.data?.userid) {
+		console.log(data, 'data', data.data && !data.data?.userid && !data.noLogin)
+		if (data.data && !data.data?.userid && !data.noLogin) {
 			data.data.userid = uni.getStorageSync('user')?.id
 		}
 		uni.request({

@@ -44,6 +44,9 @@
 	} from '@/public/request.ts'
 import { transform } from "../../public/transform"
 	export default {
+		mounted() {
+			uni.preloadPage({url: "/pages/budget/index"});
+		},
 		setup() {
 			const budget = ref(null)
 			const listData = ref([])

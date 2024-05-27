@@ -7,7 +7,7 @@
 		<view class="tag m-t-1 " v-for="(item,index) in data" :key="index">
 			<view class="flex">
 				<view class="shu"></view>
-				<text class="text title">{{transformCnDayF(item.time)}}进行账图识别</text>
+				<text class="text title">{{transformCnDayF(item.time)}}进行账单导入</text>
 			</view>
 
 			<view class="list">
@@ -52,7 +52,7 @@
 			request({
 				url: '/expenditure',
 				data: {
-					isPicture: true,
+					isImport: true,
 					time: String(new Date().getFullYear())
 
 				},
@@ -63,25 +63,25 @@
 				const obj2 = {}
 				res.data.forEach(item => {
 					
-					if (obj[item.picture_time] !== undefined) {
+					if (obj[item.import_time] !== undefined) {
 						
-						if(obj2[item.picture_time+item.time]!==undefined){
+						if(obj2[item.import_time+item.time]!==undefined){
 							
-							data.value[obj[item.picture_time]].data[obj2[item.picture_time+item.time]].data.push(item)
+							data.value[obj[item.import_time]].data[obj2[item.import_time+item.time]].data.push(item)
 						}
 						
 						else{
-							obj2[item.picture_time+item.time] = data.value[obj[item.picture_time]].data.length
-							data.value[obj[item.picture_time]].data.push({data:[item],
+							obj2[item.import_time+item.time] = data.value[obj[item.import_time]].data.length
+							data.value[obj[item.import_time]].data.push({data:[item],
 								time:item.time})
 								
 							
 						}
 					} else {
-						obj[item.picture_time] = data.value.length
-						obj2[item.picture_time+item.time] = 0
+						obj[item.import_time] = data.value.length
+						obj2[item.import_time+item.time] = 0
 						data.value.push({
-							time: item.picture_time,
+							time: item.import_time,
 							
 							data: [{time:item.time,data:[item]}]
 						})
@@ -105,13 +105,13 @@
 			}
 		},
 		mounted() {
-			uni.preloadPage({url: "/pages/my/billScan/index"});
+			uni.preloadPage({url: "/pages/my/importFile/importFile"});
 		},
 		methods: {
 			back() {
 
 				uni.navigateTo({
-					url: '/pages/my/billScan/index',
+					url: '/pages/my/importFile/importFile',
 					fail: (e) => {
 						consoe.log(e, 'e')
 					}

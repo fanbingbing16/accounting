@@ -134,6 +134,10 @@
 
 			this.getData()
 		},
+		mounted() {
+			uni.preloadPage({url: "/pages/tabbar/tabbar-1/tabbar-1"});
+			uni.preloadPage({url: "/pages/tabbar-3-detial/tabbar-3-qa/tabbar-3-qa"});
+		},
 		setup() {
 			const type = ref(2)
 			const selectTime = ref(transformCn(new Date()))

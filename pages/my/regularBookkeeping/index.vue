@@ -24,6 +24,8 @@
 	onMounted(()=>{
 		uni.preloadPage({url: "/pages/my/regularBookkeeping/detail"});
 		uni.preloadPage({url: "/pages/incomeExpenditure/addScheduleTask"});
+		uni.preloadPage({url: "/pages/tabbar/tabbar-5/tabbar-5"});
+		
 	})
 	const data = ref([])
 	function back() {

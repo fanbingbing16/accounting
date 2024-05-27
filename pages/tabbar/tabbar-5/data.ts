@@ -28,6 +28,12 @@ export const list = [
 		type: "warning"
 	},
 	{
+		url: '/pages/my/importFile/importFile',
+		text: '账单导入',
+		badge: '99',
+		type: "warning"
+	},
+	{
 		url: '/pages/my/umbrellaUsers',
 		text: '伞下用户',
 		badge: '99',
